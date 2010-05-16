@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="app_name">"Memory"</string>
+    <string name="activity_title">"Memory Game For Kids"</string>
+    <string name="success">"Congratulations, That's done !"</string>
+    <string name="new_game">"New game"</string>
+    <string name="quit">"Quit"</string>
+    <string name="button_play">"Play"</string>
+    <string name="version">"Version 1.1"</string>
+</resources>
