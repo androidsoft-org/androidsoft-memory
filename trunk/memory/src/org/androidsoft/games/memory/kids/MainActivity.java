@@ -15,6 +15,7 @@
 
 package org.androidsoft.games.memory.kids;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,6 +29,12 @@ import java.util.ArrayList;
  */
 public class MainActivity extends AbstractMainActivity
 {
+    private static final String PREF_LIST = "list";
+    private static final String PREF_MOVE_COUNT = "move_count";
+    private static final String PREF_SELECTED_COUNT = "seleted_count";
+    private static final String PREF_FOUND_COUNT = "found_count";
+    private static final String PREF_LAST_POSITION = "last_position";
+
     private final static int[] tiles = { R.drawable.item_1, R.drawable.item_2,
         R.drawable.item_3, R.drawable.item_4, R.drawable.item_5, R.drawable.item_6,
         R.drawable.item_7, R.drawable.item_8, R.drawable.item_9, R.drawable.item_10 };
@@ -36,11 +43,11 @@ public class MainActivity extends AbstractMainActivity
     private int mMoveCount;
     private int mFoundCount;
     private int mLastPosition;
-    private Tile mP1;
-    private Tile mP2;
+    private Tile mT1;
+    private Tile mT2;
     private GridView mGridView;
 
-    static ArrayList<Tile> mList = new ArrayList<Tile>();
+    static TileList mList = new TileList();
 
     /**
      * {@inheritDoc }
@@ -76,6 +83,60 @@ public class MainActivity extends AbstractMainActivity
             initGrid();
         }
         drawGrid();
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        SharedPreferences prefs = getPreferences(0);
+
+        String serialized = prefs.getString(PREF_LIST, null);
+        if (serialized != null)
+        {
+            mList = new TileList(serialized);
+            mMoveCount = prefs.getInt(PREF_MOVE_COUNT, 0);
+            ArrayList<Tile> list = mList.getSelected();
+            mSelectedCount = list.size();
+            mT1 = ( mSelectedCount > 0 ) ? list.get(0) : null;
+            mT2 = ( mSelectedCount > 1 ) ? list.get(1) : null;
+            mFoundCount = prefs.getInt( PREF_FOUND_COUNT, 0);
+            mLastPosition = prefs.getInt(PREF_LAST_POSITION, -1);
+            
+        }
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+
+        SharedPreferences.Editor editor = getPreferences(0).edit();
+        if( !mQuit )
+        {
+            // Paused without quit - save state
+            editor.putString(PREF_LIST, mList.serialize());
+            editor.putInt(PREF_MOVE_COUNT, mMoveCount);
+            editor.putInt(PREF_SELECTED_COUNT, mSelectedCount);
+            editor.putInt(PREF_FOUND_COUNT, mFoundCount);
+            editor.putInt(PREF_LAST_POSITION, mLastPosition );
+        }
+        else
+        {
+            editor.remove(PREF_LIST );
+            editor.remove(PREF_MOVE_COUNT );
+            editor.remove(PREF_SELECTED_COUNT );
+            editor.remove(PREF_FOUND_COUNT );
+            editor.remove(PREF_LAST_POSITION);
+        }
+        editor.commit();
     }
 
     /**
@@ -117,27 +178,27 @@ public class MainActivity extends AbstractMainActivity
                 switch (mSelectedCount)
                 {
                     case 0:
-                        mP1 = mList.get(position);
+                        mT1 = mList.get(position);
                         break;
 
                     case 1:
-                        mP2 = mList.get(position);
-                        if (mP1.getResId() == mP2.getResId())
+                        mT2 = mList.get(position);
+                        if (mT1.getResId() == mT2.getResId())
                         {
-                            mP1.setFound(true);
-                            mP2.setFound(true);
+                            mT1.setFound(true);
+                            mT2.setFound(true);
                             mFoundCount += 2;
                         }
                         break;
 
                     case 2:
-                        if (mP1.getResId() != mP2.getResId())
+                        if (mT1.getResId() != mT2.getResId())
                         {
-                            mP1.unselect();
-                            mP2.unselect();
+                            mT1.unselect();
+                            mT2.unselect();
                         }
                         mSelectedCount = 0;
-                        mP1 = mList.get(position);
+                        mT1 = mList.get(position);
                         break;
                 }
                 mSelectedCount++;
