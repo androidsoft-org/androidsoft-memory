@@ -15,8 +15,10 @@
                    android:layout_height="wrap_content"
                    android:gravity="center" />
         <TextView android:id="@+id/text"
-                  android:layout_width="wrap_content"
+                  android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
+                  android:gravity="center_horizontal|center_vertical"
+                  android:layout_marginBottom="10px"
                   android:text="@+string/version" />
 
         <Button android:id="@+id/button_play"
@@ -40,6 +42,6 @@
               android:stretchMode="columnWidth"
               android:gravity="center"
               android:visibility="gone" />
-    
+
 </FrameLayout>
 

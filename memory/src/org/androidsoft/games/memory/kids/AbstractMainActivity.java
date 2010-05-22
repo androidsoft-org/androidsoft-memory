@@ -17,7 +17,10 @@ package org.androidsoft.games.memory.kids;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -33,18 +36,28 @@ import android.widget.ImageView;
  */
 public abstract class AbstractMainActivity extends Activity implements OnClickListener
 {
+    private static final String PREF_STARTED = "started";
+    private static final int MENU_NEW_GAME = 1;
+    private static final int MENU_QUIT = 2;
     private static final int SPLASH_SCREEN_ROTATION_COUNT = 2;
     private static final int SPLASH_SCREEN_ROTATION_DURATION = 2000;
     private static final int GAME_SCREEN_ROTATION_COUNT = 2;
     private static final int GAME_SCREEN_ROTATION_DURATION = 2000;
 
+    protected boolean mQuit;
+
     private ViewGroup mContainer;
     private View mSplash;
     private Button mButtonPlay;
+    private boolean mStarted;
 
     protected abstract View getGameView();
     protected abstract void newGame();
 
+
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void onCreate(Bundle icicle)
     {
@@ -61,7 +74,88 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
     }
 
     /**
-     * Implement the OnClickListener callback
+     * {@inheritDoc }
+     */
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        SharedPreferences prefs = getPreferences(0);
+        mStarted = prefs.getBoolean( PREF_STARTED , false );
+        if( mStarted )
+        {
+            mSplash.setVisibility(View.GONE);
+            getGameView().setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            mSplash.setVisibility(View.VISIBLE);
+            getGameView().setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+
+        SharedPreferences.Editor editor = getPreferences(0).edit();
+        if( !mQuit )
+        {
+            editor.putBoolean( PREF_STARTED, mStarted );
+        }
+        else
+        {
+            editor.remove( PREF_STARTED );
+        }
+        editor.commit();
+    }
+
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        menu.add(0, MENU_NEW_GAME, 0, getString( R.string.new_game ));
+        menu.add(0, MENU_QUIT, 0, getString( R.string.quit ));
+        return true;
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case MENU_NEW_GAME:
+                newGame();
+                return true;
+            case MENU_QUIT:
+                quit();
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Quit the application
+     */
+    void quit()
+    {
+        mQuit = true;
+        AbstractMainActivity.this.finish();
+    }
+
+    /**
+     * {@inheritDoc }
      */
     public void onClick(View v)
     {
@@ -87,7 +181,7 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
 
             public void onClick(DialogInterface dialog, int id)
             {
-                AbstractMainActivity.this.finish();
+                quit();
             }
         });
         AlertDialog alert = builder.create();
@@ -181,6 +275,7 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
             rotation.setInterpolator(new DecelerateInterpolator());
 
             mContainer.startAnimation(rotation);
+            mStarted = true;
         }
     }
 }
