@@ -34,15 +34,26 @@ public class MainActivity extends AbstractMainActivity
     private static final String PREF_SELECTED_COUNT = "seleted_count";
     private static final String PREF_FOUND_COUNT = "found_count";
     private static final String PREF_LAST_POSITION = "last_position";
+    private static final String PREF_NOT_FOUND_RESID = "not_found_resid";
+    private static final String PREF_BEST_MOVE_COUNT = "best_move_count";
 
-    private final static int[] tiles = { R.drawable.item_1, R.drawable.item_2,
+    private static final int[] tiles_set_1 = { R.drawable.item_1, R.drawable.item_2,
         R.drawable.item_3, R.drawable.item_4, R.drawable.item_5, R.drawable.item_6,
         R.drawable.item_7, R.drawable.item_8, R.drawable.item_9, R.drawable.item_10 };
+
+    private static final int[] tiles_set_2 = { R.drawable.item_11, R.drawable.item_12,
+        R.drawable.item_13, R.drawable.item_14, R.drawable.item_15, R.drawable.item_16,
+        R.drawable.item_17, R.drawable.item_18, R.drawable.item_19, R.drawable.item_20 };
+    
+    private static final int[][] tiles_set = { tiles_set_1 , tiles_set_2 };
+
+    private static final int[] not_found_tile_set = {  R.drawable.not_found_1 , R.drawable.not_found_2 };
 
     private int mSelectedCount;
     private int mMoveCount;
     private int mFoundCount;
     private int mLastPosition;
+    private int mNotFoundResId;
     private Tile mT1;
     private Tile mT2;
     private GridView mGridView;
@@ -106,6 +117,8 @@ public class MainActivity extends AbstractMainActivity
             mT2 = ( mSelectedCount > 1 ) ? list.get(1) : null;
             mFoundCount = prefs.getInt( PREF_FOUND_COUNT, 0);
             mLastPosition = prefs.getInt(PREF_LAST_POSITION, -1);
+            mNotFoundResId = prefs.getInt(PREF_NOT_FOUND_RESID, not_found_tile_set[0]);
+            Tile.setNotFoundResId( mNotFoundResId );
             
         }
     }
@@ -127,6 +140,7 @@ public class MainActivity extends AbstractMainActivity
             editor.putInt(PREF_SELECTED_COUNT, mSelectedCount);
             editor.putInt(PREF_FOUND_COUNT, mFoundCount);
             editor.putInt(PREF_LAST_POSITION, mLastPosition );
+            editor.putInt(PREF_NOT_FOUND_RESID, mNotFoundResId);
         }
         else
         {
@@ -135,10 +149,25 @@ public class MainActivity extends AbstractMainActivity
             editor.remove(PREF_SELECTED_COUNT );
             editor.remove(PREF_FOUND_COUNT );
             editor.remove(PREF_LAST_POSITION);
+            editor.remove(PREF_NOT_FOUND_RESID);
         }
         editor.commit();
     }
 
+    private int getBestMoveCount()
+    {
+        SharedPreferences prefs = getPreferences(0);
+
+        return prefs.getInt(PREF_BEST_MOVE_COUNT, 100 );
+
+    }
+
+    private void setBestMoveCount( int nMoveCount )
+    {
+        SharedPreferences.Editor editor = getPreferences(0).edit();
+        editor.putInt(PREF_BEST_MOVE_COUNT, nMoveCount );
+        editor.commit();
+    }
     /**
      * Initialize game data
      */
@@ -148,7 +177,9 @@ public class MainActivity extends AbstractMainActivity
         mFoundCount = 0;
         mMoveCount = 0;
         mList.clear();
-        Tile.setNotFoundResId(R.drawable.not_found);
+        mNotFoundResId = not_found_tile_set[ rand( not_found_tile_set.length)];
+        Tile.setNotFoundResId( mNotFoundResId );
+        int[] tiles = tiles_set[ rand( tiles_set.length)];
         for( int i = 0 ; i < tiles.length ; i++ )
         {
             addRandomly( tiles[i] );
@@ -220,13 +251,25 @@ public class MainActivity extends AbstractMainActivity
     }
 
     /**
-     * Check if all pieces has been 
+     * Check if all pieces has been found
      */
     private void checkComplete()
     {
         if (mFoundCount == mList.size())
         {
-            this.showEndDialog();
+            int nHighScore = getBestMoveCount();
+            String title = getString( R.string.success_title );
+            String message = String.format( getString( R.string.success ) , mMoveCount , nHighScore );
+            int icon = R.drawable.win;
+            if( mMoveCount < nHighScore )
+            {
+                title = getString( R.string.hiscore_title );
+                message = String.format( getString( R.string.hiscore ) , mMoveCount , nHighScore );
+                icon = R.drawable.hiscore;
+
+                setBestMoveCount( mMoveCount );
+            }
+            this.showEndDialog( title , message , icon );
         }
     }
 
@@ -243,5 +286,11 @@ public class MainActivity extends AbstractMainActivity
         nPos = (int) dPos;
         mList.add(nPos, new Tile(nResId));
 
+    }
+
+    private int rand( int nSize )
+    {
+        double dPos = Math.random() * nSize;
+        return (int) dPos;
     }
 }

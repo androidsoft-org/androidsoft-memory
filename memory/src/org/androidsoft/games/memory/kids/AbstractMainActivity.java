@@ -36,6 +36,7 @@ import android.widget.ImageView;
  */
 public abstract class AbstractMainActivity extends Activity implements OnClickListener
 {
+
     private static final String PREF_STARTED = "started";
     private static final int MENU_NEW_GAME = 1;
     private static final int MENU_QUIT = 2;
@@ -43,17 +44,15 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
     private static final int SPLASH_SCREEN_ROTATION_DURATION = 2000;
     private static final int GAME_SCREEN_ROTATION_COUNT = 2;
     private static final int GAME_SCREEN_ROTATION_DURATION = 2000;
-
     protected boolean mQuit;
-
     private ViewGroup mContainer;
     private View mSplash;
     private Button mButtonPlay;
     private boolean mStarted;
 
     protected abstract View getGameView();
-    protected abstract void newGame();
 
+    protected abstract void newGame();
 
     /**
      * {@inheritDoc }
@@ -82,13 +81,12 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
         super.onResume();
 
         SharedPreferences prefs = getPreferences(0);
-        mStarted = prefs.getBoolean( PREF_STARTED , false );
-        if( mStarted )
+        mStarted = prefs.getBoolean(PREF_STARTED, false);
+        if (mStarted)
         {
             mSplash.setVisibility(View.GONE);
             getGameView().setVisibility(View.VISIBLE);
-        }
-        else
+        } else
         {
             mSplash.setVisibility(View.VISIBLE);
             getGameView().setVisibility(View.GONE);
@@ -104,17 +102,15 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
         super.onPause();
 
         SharedPreferences.Editor editor = getPreferences(0).edit();
-        if( !mQuit )
+        if (!mQuit)
         {
-            editor.putBoolean( PREF_STARTED, mStarted );
-        }
-        else
+            editor.putBoolean(PREF_STARTED, mStarted);
+        } else
         {
-            editor.remove( PREF_STARTED );
+            editor.remove(PREF_STARTED);
         }
         editor.commit();
     }
-
 
     /**
      * {@inheritDoc }
@@ -122,8 +118,8 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        menu.add(0, MENU_NEW_GAME, 0, getString( R.string.new_game ));
-        menu.add(0, MENU_QUIT, 0, getString( R.string.quit ));
+        menu.add(0, MENU_NEW_GAME, 0, getString(R.string.new_game));
+        menu.add(0, MENU_QUIT, 0, getString(R.string.quit));
         return true;
     }
 
@@ -161,29 +157,36 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
     {
         if (v == mButtonPlay)
         {
-            applyRotation(0, 0, SPLASH_SCREEN_ROTATION_COUNT * 360 );
+            applyRotation(0, 0, SPLASH_SCREEN_ROTATION_COUNT * 360);
         }
     }
 
-    protected void showEndDialog()
+    protected void showEndDialog(String title , String message, int icon)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.success)).setCancelable(false).setPositiveButton(getString(R.string.new_game), new DialogInterface.OnClickListener()
-        {
+        builder.setTitle(title);
+        builder.setIcon( icon );
+        builder.setMessage(message);
+        builder.setCancelable(false);
+        builder.setPositiveButton(getString(R.string.new_game),
+                new DialogInterface.OnClickListener()
+                {
 
-            public void onClick(DialogInterface dialog, int id)
-            {
-                dialog.cancel();
-                newGame();
-            }
-        }).setNegativeButton(getString(R.string.quit), new DialogInterface.OnClickListener()
-        {
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        dialog.cancel();
+                        newGame();
+                    }
+                });
+        builder.setNegativeButton(getString(R.string.quit),
+                new DialogInterface.OnClickListener()
+                {
 
-            public void onClick(DialogInterface dialog, int id)
-            {
-                quit();
-            }
-        });
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        quit();
+                    }
+                });
         AlertDialog alert = builder.create();
         alert.show();
 
@@ -207,7 +210,7 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
         // The animation listener is used to trigger the next animation
         final Rotate3dAnimation rotation =
                 new Rotate3dAnimation(start, end, centerX, centerY, 310.0f, true);
-        rotation.setDuration( SPLASH_SCREEN_ROTATION_DURATION );
+        rotation.setDuration(SPLASH_SCREEN_ROTATION_DURATION);
         rotation.setFillAfter(true);
         rotation.setInterpolator(new AccelerateInterpolator());
         rotation.setAnimationListener(new DisplayNextView(position));
@@ -270,7 +273,7 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
 
             rotation = new Rotate3dAnimation(0, 360 * GAME_SCREEN_ROTATION_COUNT, centerX, centerY, 310.0f, false);
 
-            rotation.setDuration( GAME_SCREEN_ROTATION_DURATION );
+            rotation.setDuration(GAME_SCREEN_ROTATION_DURATION);
             rotation.setFillAfter(true);
             rotation.setInterpolator(new DecelerateInterpolator());
 
