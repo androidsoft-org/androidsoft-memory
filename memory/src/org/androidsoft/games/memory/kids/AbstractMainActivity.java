@@ -18,6 +18,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,11 +45,15 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
     private static final int SPLASH_SCREEN_ROTATION_DURATION = 2000;
     private static final int GAME_SCREEN_ROTATION_COUNT = 2;
     private static final int GAME_SCREEN_ROTATION_DURATION = 2000;
+    private static final String KEY_VERSION = "version";
+    private static final int DEFAULT_VERSION = 1;  // should be set to 0 after 1.4
     protected boolean mQuit;
     private ViewGroup mContainer;
     private View mSplash;
     private Button mButtonPlay;
     private boolean mStarted;
+    private String mResTitle;
+    private String mResMessage;
 
     protected abstract View getGameView();
 
@@ -70,6 +75,8 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
 
         ImageView image = (ImageView) findViewById(R.id.image_splash);
         image.setImageResource(R.drawable.splash);
+        
+        checkLastVersion();
     }
 
     /**
@@ -281,4 +288,66 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
             mStarted = true;
         }
     }
+
+    private void checkLastVersion()
+    {
+        int resTitle;
+        int resMessage;
+        final int lastVersion = getVersion();
+        if ( lastVersion < Constants.VERSION)
+        {
+            if( lastVersion == 0 )
+            {
+                // This is a new install
+                resTitle = R.string.first_run_dialog_title;
+                resMessage = R.string.first_run_dialog_message;
+            }
+            else
+            {
+                // This is an upgrade.
+                resTitle = R.string.whats_new_dialog_title;
+                resMessage = R.string.whats_new_dialog_message;
+            }
+            // show what's new message
+            saveVersion( Constants.VERSION );
+            showWhatsNewDialog( resTitle , resMessage , R.drawable.icon );
+        }
+    }
+
+    private int getVersion()
+    {
+        SharedPreferences prefs = getSharedPreferences( AbstractMainActivity.class.getName(), Activity.MODE_PRIVATE);
+        return prefs.getInt( KEY_VERSION , DEFAULT_VERSION );
+    }
+
+    private void saveVersion( int version )
+    {
+        SharedPreferences prefs = getSharedPreferences( AbstractMainActivity.class.getName(), Activity.MODE_PRIVATE);
+        Editor editor = prefs.edit();
+        editor.putInt( KEY_VERSION, version );
+        editor.commit();
+
+    }
+
+    protected void showWhatsNewDialog( int title , int message, int icon)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setIcon( icon );
+        builder.setMessage(message);
+        builder.setPositiveButton(getString(R.string.ok),
+                new DialogInterface.OnClickListener()
+                {
+
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        dialog.cancel();
+                        newGame();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+
 }
