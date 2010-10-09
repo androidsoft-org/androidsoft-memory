@@ -30,17 +30,31 @@ public final class R {
         public static final int item_19=0x7f02000c;
         public static final int item_2=0x7f02000d;
         public static final int item_20=0x7f02000e;
-        public static final int item_3=0x7f02000f;
-        public static final int item_4=0x7f020010;
-        public static final int item_5=0x7f020011;
-        public static final int item_6=0x7f020012;
-        public static final int item_7=0x7f020013;
-        public static final int item_8=0x7f020014;
-        public static final int item_9=0x7f020015;
-        public static final int not_found_1=0x7f020016;
-        public static final int not_found_2=0x7f020017;
-        public static final int splash=0x7f020018;
-        public static final int win=0x7f020019;
+        public static final int item_21=0x7f02000f;
+        public static final int item_22=0x7f020010;
+        public static final int item_23=0x7f020011;
+        public static final int item_24=0x7f020012;
+        public static final int item_25=0x7f020013;
+        public static final int item_26=0x7f020014;
+        public static final int item_27=0x7f020015;
+        public static final int item_28=0x7f020016;
+        public static final int item_29=0x7f020017;
+        public static final int item_3=0x7f020018;
+        public static final int item_30=0x7f020019;
+        public static final int item_31=0x7f02001a;
+        public static final int item_32=0x7f02001b;
+        public static final int item_33=0x7f02001c;
+        public static final int item_34=0x7f02001d;
+        public static final int item_4=0x7f02001e;
+        public static final int item_5=0x7f02001f;
+        public static final int item_6=0x7f020020;
+        public static final int item_7=0x7f020021;
+        public static final int item_8=0x7f020022;
+        public static final int item_9=0x7f020023;
+        public static final int not_found_1=0x7f020024;
+        public static final int not_found_2=0x7f020025;
+        public static final int splash=0x7f020026;
+        public static final int win=0x7f020027;
     }
     public static final class id {
         public static final int button_play=0x7f060004;
@@ -57,12 +71,19 @@ public final class R {
         public static final int activity_title=0x7f050001;
         public static final int app_name=0x7f050000;
         public static final int button_play=0x7f050008;
+        public static final int first_run_dialog_message=0x7f05000c;
+        /**  What's new dialog 
+         */
+        public static final int first_run_dialog_title=0x7f05000b;
         public static final int hiscore=0x7f050005;
         public static final int hiscore_title=0x7f050004;
         public static final int new_game=0x7f050006;
+        public static final int ok=0x7f05000a;
         public static final int quit=0x7f050007;
         public static final int success=0x7f050003;
         public static final int success_title=0x7f050002;
         public static final int version=0x7f050009;
+        public static final int whats_new_dialog_message=0x7f05000e;
+        public static final int whats_new_dialog_title=0x7f05000d;
     }
 }

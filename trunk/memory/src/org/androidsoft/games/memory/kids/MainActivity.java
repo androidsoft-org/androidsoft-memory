@@ -22,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * MainActivity
@@ -37,17 +38,22 @@ public class MainActivity extends AbstractMainActivity
     private static final String PREF_NOT_FOUND_RESID = "not_found_resid";
     private static final String PREF_BEST_MOVE_COUNT = "best_move_count";
 
-    private static final int[] tiles_set_1 = { R.drawable.item_1, R.drawable.item_2,
+    private static final int[] tiles = { R.drawable.item_1, R.drawable.item_2,
         R.drawable.item_3, R.drawable.item_4, R.drawable.item_5, R.drawable.item_6,
-        R.drawable.item_7, R.drawable.item_8, R.drawable.item_9, R.drawable.item_10 };
+        R.drawable.item_7, R.drawable.item_8, R.drawable.item_9, R.drawable.item_10,
+        R.drawable.item_11, R.drawable.item_12, R.drawable.item_13, R.drawable.item_14,
+        R.drawable.item_15, R.drawable.item_16, R.drawable.item_17, R.drawable.item_18,
+        R.drawable.item_19, R.drawable.item_20, R.drawable.item_21, R.drawable.item_22,
+        R.drawable.item_23, R.drawable.item_24, R.drawable.item_25, R.drawable.item_26,
+        R.drawable.item_27, R.drawable.item_28, R.drawable.item_29, R.drawable.item_30,
+        R.drawable.item_31, R.drawable.item_32, R.drawable.item_33, R.drawable.item_34
+    };
 
-    private static final int[] tiles_set_2 = { R.drawable.item_11, R.drawable.item_12,
-        R.drawable.item_13, R.drawable.item_14, R.drawable.item_15, R.drawable.item_16,
-        R.drawable.item_17, R.drawable.item_18, R.drawable.item_19, R.drawable.item_20 };
-    
-    private static final int[][] tiles_set = { tiles_set_1 , tiles_set_2 };
 
     private static final int[] not_found_tile_set = {  R.drawable.not_found_1 , R.drawable.not_found_2 };
+
+
+    private static final int SET_SIZE = 10;
 
     private int mSelectedCount;
     private int mMoveCount;
@@ -179,10 +185,9 @@ public class MainActivity extends AbstractMainActivity
         mList.clear();
         mNotFoundResId = not_found_tile_set[ rand( not_found_tile_set.length)];
         Tile.setNotFoundResId( mNotFoundResId );
-        int[] tiles = tiles_set[ rand( tiles_set.length)];
-        for( int i = 0 ; i < tiles.length ; i++ )
+        for( Integer tile : getTileSet() )
         {
-            addRandomly( tiles[i] );
+            addRandomly( tile );
         }
     }
 
@@ -292,5 +297,22 @@ public class MainActivity extends AbstractMainActivity
     {
         double dPos = Math.random() * nSize;
         return (int) dPos;
+    }
+
+
+    private List<Integer> getTileSet()
+    {
+        List<Integer> list = new ArrayList<Integer>();
+
+        while( list.size() < SET_SIZE )
+        {
+            int n = rand( tiles.length );
+            int t = tiles[n];
+            if( ! list.contains(t))
+            {
+                list.add(t);
+            }
+        }
+        return list;
     }
 }
