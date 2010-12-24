@@ -12,7 +12,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.androidsoft.games.memory.kids;
 
 import android.content.Context;
@@ -30,15 +29,35 @@ public class ImageAdapter extends BaseAdapter
 {
 
     private Context mContext;
+    private int mTileSize;
+    private Memory mMemory;
 
-    public ImageAdapter(Context c)
+    public ImageAdapter(Context c, int width, int height, int countMax, int countMin, int margin , Memory memory )
     {
         mContext = c;
+        mMemory = memory;
+
+        if (width > height)
+        {
+            mTileSize = getTileSize(width, height, countMax, countMin, margin);
+        } else
+        {
+            mTileSize = getTileSize(height, width, countMax, countMin, margin);
+
+        }
+
+    }
+
+    private int getTileSize(int max, int min, int countMax, int countMin, int margin)
+    {
+        int a = max / countMax;
+        int b = min / countMin;
+        return ((a < b) ? a : b ) - margin;
     }
 
     public int getCount()
     {
-        return MainActivity.mList.size();
+        return mMemory.getCount();
     }
 
     public Object getItem(int position)
@@ -58,7 +77,7 @@ public class ImageAdapter extends BaseAdapter
         if (convertView == null)
         {  // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(70, 70));
+            imageView.setLayoutParams(new GridView.LayoutParams(mTileSize, mTileSize));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(2, 2, 2, 2);
         } else
@@ -67,10 +86,7 @@ public class ImageAdapter extends BaseAdapter
         }
 
 
-        imageView.setImageResource( MainActivity.mList.get(position).getResId() );
+        imageView.setImageResource( mMemory.getResId( position ));
         return imageView;
     }
-
-
-
 }

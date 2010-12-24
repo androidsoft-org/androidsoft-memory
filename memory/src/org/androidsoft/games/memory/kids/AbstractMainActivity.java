@@ -52,8 +52,6 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
     private View mSplash;
     private Button mButtonPlay;
     private boolean mStarted;
-    private String mResTitle;
-    private String mResMessage;
 
     protected abstract View getGameView();
 

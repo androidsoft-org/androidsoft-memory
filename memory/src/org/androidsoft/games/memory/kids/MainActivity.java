@@ -12,33 +12,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.androidsoft.games.memory.kids;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * MainActivity
  * @author pierre
  */
-public class MainActivity extends AbstractMainActivity
+public class MainActivity extends AbstractMainActivity implements Memory.OnMemoryListener
 {
-    private static final String PREF_LIST = "list";
-    private static final String PREF_MOVE_COUNT = "move_count";
-    private static final String PREF_SELECTED_COUNT = "seleted_count";
-    private static final String PREF_FOUND_COUNT = "found_count";
-    private static final String PREF_LAST_POSITION = "last_position";
+
     private static final String PREF_NOT_FOUND_RESID = "not_found_resid";
     private static final String PREF_BEST_MOVE_COUNT = "best_move_count";
-
-    private static final int[] tiles = { R.drawable.item_1, R.drawable.item_2,
+    private static final int MAX_TILES_PER_ROW = 5;
+    private static final int MIN_TILES_PER_ROW = 4;
+    private static final int MARGIN = 10;
+    private static final int[] tiles =
+    {
+        R.drawable.item_1, R.drawable.item_2,
         R.drawable.item_3, R.drawable.item_4, R.drawable.item_5, R.drawable.item_6,
         R.drawable.item_7, R.drawable.item_8, R.drawable.item_9, R.drawable.item_10,
         R.drawable.item_11, R.drawable.item_12, R.drawable.item_13, R.drawable.item_14,
@@ -48,23 +43,13 @@ public class MainActivity extends AbstractMainActivity
         R.drawable.item_27, R.drawable.item_28, R.drawable.item_29, R.drawable.item_30,
         R.drawable.item_31, R.drawable.item_32, R.drawable.item_33, R.drawable.item_34
     };
-
-
-    private static final int[] not_found_tile_set = {  R.drawable.not_found_1 , R.drawable.not_found_2 };
-
-
-    private static final int SET_SIZE = 10;
-
-    private int mSelectedCount;
-    private int mMoveCount;
-    private int mFoundCount;
-    private int mLastPosition;
+    private static final int[] not_found_tile_set =
+    {
+        R.drawable.not_found_1, R.drawable.not_found_2
+    };
+    private Memory mMemory;
     private int mNotFoundResId;
-    private Tile mT1;
-    private Tile mT2;
-    private GridView mGridView;
-
-    static TileList mList = new TileList();
+    private MemoryGridView mGridView;
 
     /**
      * {@inheritDoc }
@@ -73,6 +58,7 @@ public class MainActivity extends AbstractMainActivity
     public void onCreate(Bundle icicle)
     {
         super.onCreate(icicle);
+
 
         newGame();
 
@@ -87,7 +73,6 @@ public class MainActivity extends AbstractMainActivity
         return mGridView;
     }
 
-
     /**
      * {@inheritDoc }
      */
@@ -95,11 +80,10 @@ public class MainActivity extends AbstractMainActivity
     protected void newGame()
     {
         initData();
-        if( mGridView == null )
+        if (mGridView == null)
         {
             initGrid();
         }
-        drawGrid();
     }
 
     /**
@@ -111,22 +95,12 @@ public class MainActivity extends AbstractMainActivity
         super.onResume();
 
         SharedPreferences prefs = getPreferences(0);
+        mMemory.onResume(prefs);
+        mNotFoundResId = prefs.getInt(PREF_NOT_FOUND_RESID, not_found_tile_set[0]);
+        Tile.setNotFoundResId(mNotFoundResId);
 
-        String serialized = prefs.getString(PREF_LIST, null);
-        if (serialized != null)
-        {
-            mList = new TileList(serialized);
-            mMoveCount = prefs.getInt(PREF_MOVE_COUNT, 0);
-            ArrayList<Tile> list = mList.getSelected();
-            mSelectedCount = list.size();
-            mT1 = ( mSelectedCount > 0 ) ? list.get(0) : null;
-            mT2 = ( mSelectedCount > 1 ) ? list.get(1) : null;
-            mFoundCount = prefs.getInt( PREF_FOUND_COUNT, 0);
-            mLastPosition = prefs.getInt(PREF_LAST_POSITION, -1);
-            mNotFoundResId = prefs.getInt(PREF_NOT_FOUND_RESID, not_found_tile_set[0]);
-            Tile.setNotFoundResId( mNotFoundResId );
-            
-        }
+        Log.d("MemoryKids", "Draw onResume - mGrid.width:" + mGridView.getWidth() + " window:" + getWindow().getDecorView().getWidth());
+        drawGrid();
     }
 
     /**
@@ -137,58 +111,35 @@ public class MainActivity extends AbstractMainActivity
     {
         super.onPause();
 
-        SharedPreferences.Editor editor = getPreferences(0).edit();
-        if( !mQuit )
-        {
-            // Paused without quit - save state
-            editor.putString(PREF_LIST, mList.serialize());
-            editor.putInt(PREF_MOVE_COUNT, mMoveCount);
-            editor.putInt(PREF_SELECTED_COUNT, mSelectedCount);
-            editor.putInt(PREF_FOUND_COUNT, mFoundCount);
-            editor.putInt(PREF_LAST_POSITION, mLastPosition );
-            editor.putInt(PREF_NOT_FOUND_RESID, mNotFoundResId);
-        }
-        else
-        {
-            editor.remove(PREF_LIST );
-            editor.remove(PREF_MOVE_COUNT );
-            editor.remove(PREF_SELECTED_COUNT );
-            editor.remove(PREF_FOUND_COUNT );
-            editor.remove(PREF_LAST_POSITION);
-            editor.remove(PREF_NOT_FOUND_RESID);
-        }
-        editor.commit();
+        mMemory.onPause(getPreferences(0), mQuit);
+//            editor.putInt(PREF_NOT_FOUND_RESID, mNotFoundResId);
+
     }
 
     private int getBestMoveCount()
     {
         SharedPreferences prefs = getPreferences(0);
 
-        return prefs.getInt(PREF_BEST_MOVE_COUNT, 100 );
+        return prefs.getInt(PREF_BEST_MOVE_COUNT, 100);
 
     }
 
-    private void setBestMoveCount( int nMoveCount )
+    private void setBestMoveCount(int nMoveCount)
     {
         SharedPreferences.Editor editor = getPreferences(0).edit();
-        editor.putInt(PREF_BEST_MOVE_COUNT, nMoveCount );
+        editor.putInt(PREF_BEST_MOVE_COUNT, nMoveCount);
         editor.commit();
     }
+
     /**
      * Initialize game data
      */
     private void initData()
     {
-        mLastPosition = -1;
-        mFoundCount = 0;
-        mMoveCount = 0;
-        mList.clear();
-        mNotFoundResId = not_found_tile_set[ rand( not_found_tile_set.length)];
-        Tile.setNotFoundResId( mNotFoundResId );
-        for( Integer tile : getTileSet() )
-        {
-            addRandomly( tile );
-        }
+        mMemory = new Memory(tiles, this);
+
+        mNotFoundResId = not_found_tile_set[0];
+        Tile.setNotFoundResId(mNotFoundResId);
     }
 
     /**
@@ -196,54 +147,62 @@ public class MainActivity extends AbstractMainActivity
      */
     private void initGrid()
     {
+        mGridView = (MemoryGridView) findViewById(R.id.gridview);
+        mGridView.setMemory(mMemory);
+        /*
         mGridView = (GridView) findViewById(R.id.gridview);
+        mGridView.invalidate();
 
         mGridView.setOnItemClickListener(new OnItemClickListener()
         {
 
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id)
-            {
-                if (position == mLastPosition)
-                {
-                    // Same item clicked
-                    return;
-                }
-                mLastPosition = position;
-                mList.get(position).select();
+        public void onItemClick(AdapterView<?> parent, View v, int position, long id)
+        {
+        if (position == mLastPosition)
+        {
+        // Same item clicked
+        return;
+        }
+        mLastPosition = position;
+        mList.get(position).select();
 
-                switch (mSelectedCount)
-                {
-                    case 0:
-                        mT1 = mList.get(position);
-                        break;
+        switch (mSelectedCount)
+        {
+        case 0:
+        mT1 = mList.get(position);
+        break;
 
-                    case 1:
-                        mT2 = mList.get(position);
-                        if (mT1.getResId() == mT2.getResId())
-                        {
-                            mT1.setFound(true);
-                            mT2.setFound(true);
-                            mFoundCount += 2;
-                        }
-                        break;
+        case 1:
+        mT2 = mList.get(position);
+        if (mT1.getResId() == mT2.getResId())
+        {
+        mT1.setFound(true);
+        mT2.setFound(true);
+        mFoundCount += 2;
+        }
+        break;
 
-                    case 2:
-                        if (mT1.getResId() != mT2.getResId())
-                        {
-                            mT1.unselect();
-                            mT2.unselect();
-                        }
-                        mSelectedCount = 0;
-                        mT1 = mList.get(position);
-                        break;
-                }
-                mSelectedCount++;
-                mMoveCount++;
-                drawGrid();
-                checkComplete();
-            }
+        case 2:
+        if (mT1.getResId() != mT2.getResId())
+        {
+        mT1.unselect();
+        mT2.unselect();
+        }
+        mSelectedCount = 0;
+        mT1 = mList.get(position);
+        break;
+        }
+        mSelectedCount++;
+        mMoveCount++;
+        Log.d("MemoryKids", "Draw onItemClick - mGrid.width:" + mGridView.getWidth()  + " window:" + getWindow().getDecorView().getWidth() );
+        drawGrid();
+        checkComplete();
+        }
         });
 
+        Log.d("MemoryKids", "Draw initGrid - mGrid.width:" + mGridView.getWidth() + " window:" + getWindow().getDecorView().getWidth());
+        drawGrid();
+         */
     }
 
     /**
@@ -251,68 +210,38 @@ public class MainActivity extends AbstractMainActivity
      */
     private void drawGrid()
     {
-        mGridView.setAdapter(new ImageAdapter(MainActivity.this));
+
+        mGridView.setAdapter(new ImageAdapter(MainActivity.this, mGridView.getWidth(), mGridView.getHeight(), MAX_TILES_PER_ROW, MIN_TILES_PER_ROW, MARGIN , mMemory));
 
     }
 
-    /**
-     * Check if all pieces has been found
-     */
-    private void checkComplete()
+    @Override
+    public void onAttachedToWindow()
     {
-        if (mFoundCount == mList.size())
+        super.onAttachedToWindow();
+        Log.d("MemoryKids", "Draw onAttached - mGrid.width:" + mGridView.getWidth() + " window:" + getWindow().getDecorView().getWidth());
+        drawGrid();
+    }
+
+    public void onComplete(int countMove)
+    {
+        int nHighScore = getBestMoveCount();
+        String title = getString(R.string.success_title);
+        String message = String.format(getString(R.string.success), countMove, nHighScore);
+        int icon = R.drawable.win;
+        if (countMove < nHighScore)
         {
-            int nHighScore = getBestMoveCount();
-            String title = getString( R.string.success_title );
-            String message = String.format( getString( R.string.success ) , mMoveCount , nHighScore );
-            int icon = R.drawable.win;
-            if( mMoveCount < nHighScore )
-            {
-                title = getString( R.string.hiscore_title );
-                message = String.format( getString( R.string.hiscore ) , mMoveCount , nHighScore );
-                icon = R.drawable.hiscore;
+            title = getString(R.string.hiscore_title);
+            message = String.format(getString(R.string.hiscore), countMove, nHighScore);
+            icon = R.drawable.hiscore;
 
-                setBestMoveCount( mMoveCount );
-            }
-            this.showEndDialog( title , message , icon );
+            setBestMoveCount(countMove);
         }
+        this.showEndDialog(title, message, icon);
     }
 
-    /**
-     * Add a pair of pieces randomly in the list
-     * @param nResId The resid of the piece
-     */
-    private void addRandomly(int nResId)
+    public void onUpdateView()
     {
-        double dPos = Math.random() * mList.size();
-        int nPos = (int) dPos;
-        mList.add(nPos, new Tile(nResId));
-        dPos = Math.random() * mList.size();
-        nPos = (int) dPos;
-        mList.add(nPos, new Tile(nResId));
-
-    }
-
-    private int rand( int nSize )
-    {
-        double dPos = Math.random() * nSize;
-        return (int) dPos;
-    }
-
-
-    private List<Integer> getTileSet()
-    {
-        List<Integer> list = new ArrayList<Integer>();
-
-        while( list.size() < SET_SIZE )
-        {
-            int n = rand( tiles.length );
-            int t = tiles[n];
-            if( ! list.contains(t))
-            {
-                list.add(t);
-            }
-        }
-        return list;
+        drawGrid();
     }
 }
