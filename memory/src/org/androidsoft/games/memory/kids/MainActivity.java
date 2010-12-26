@@ -14,6 +14,7 @@
  */
 package org.androidsoft.games.memory.kids;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,9 +29,6 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
 
     private static final String PREF_NOT_FOUND_RESID = "not_found_resid";
     private static final String PREF_BEST_MOVE_COUNT = "best_move_count";
-    private static final int MAX_TILES_PER_ROW = 5;
-    private static final int MIN_TILES_PER_ROW = 4;
-    private static final int MARGIN = 10;
     private static final int[] tiles =
     {
         R.drawable.item_1, R.drawable.item_2,
@@ -47,7 +45,7 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
     {
         R.drawable.not_found_1, R.drawable.not_found_2
     };
-    private Memory mMemory;
+    private Memory mMemory = new Memory(tiles, this);
     private int mNotFoundResId;
     private MemoryGridView mGridView;
 
@@ -84,7 +82,19 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
         {
             initGrid();
         }
+        drawGrid();
     }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    protected void about()
+    {
+        Intent intent = new Intent( this , CreditsActivity.class );
+        startActivity(intent);
+    }
+
 
     /**
      * {@inheritDoc }
@@ -112,7 +122,6 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
         super.onPause();
 
         mMemory.onPause(getPreferences(0), mQuit);
-//            editor.putInt(PREF_NOT_FOUND_RESID, mNotFoundResId);
 
     }
 
@@ -136,8 +145,7 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
      */
     private void initData()
     {
-        mMemory = new Memory(tiles, this);
-
+        mMemory.reset();
         mNotFoundResId = not_found_tile_set[0];
         Tile.setNotFoundResId(mNotFoundResId);
     }
@@ -149,60 +157,6 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
     {
         mGridView = (MemoryGridView) findViewById(R.id.gridview);
         mGridView.setMemory(mMemory);
-        /*
-        mGridView = (GridView) findViewById(R.id.gridview);
-        mGridView.invalidate();
-
-        mGridView.setOnItemClickListener(new OnItemClickListener()
-        {
-
-        public void onItemClick(AdapterView<?> parent, View v, int position, long id)
-        {
-        if (position == mLastPosition)
-        {
-        // Same item clicked
-        return;
-        }
-        mLastPosition = position;
-        mList.get(position).select();
-
-        switch (mSelectedCount)
-        {
-        case 0:
-        mT1 = mList.get(position);
-        break;
-
-        case 1:
-        mT2 = mList.get(position);
-        if (mT1.getResId() == mT2.getResId())
-        {
-        mT1.setFound(true);
-        mT2.setFound(true);
-        mFoundCount += 2;
-        }
-        break;
-
-        case 2:
-        if (mT1.getResId() != mT2.getResId())
-        {
-        mT1.unselect();
-        mT2.unselect();
-        }
-        mSelectedCount = 0;
-        mT1 = mList.get(position);
-        break;
-        }
-        mSelectedCount++;
-        mMoveCount++;
-        Log.d("MemoryKids", "Draw onItemClick - mGrid.width:" + mGridView.getWidth()  + " window:" + getWindow().getDecorView().getWidth() );
-        drawGrid();
-        checkComplete();
-        }
-        });
-
-        Log.d("MemoryKids", "Draw initGrid - mGrid.width:" + mGridView.getWidth() + " window:" + getWindow().getDecorView().getWidth());
-        drawGrid();
-         */
     }
 
     /**
@@ -210,17 +164,8 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
      */
     private void drawGrid()
     {
+        mGridView.update();
 
-        mGridView.setAdapter(new ImageAdapter(MainActivity.this, mGridView.getWidth(), mGridView.getHeight(), MAX_TILES_PER_ROW, MIN_TILES_PER_ROW, MARGIN , mMemory));
-
-    }
-
-    @Override
-    public void onAttachedToWindow()
-    {
-        super.onAttachedToWindow();
-        Log.d("MemoryKids", "Draw onAttached - mGrid.width:" + mGridView.getWidth() + " window:" + getWindow().getDecorView().getWidth());
-        drawGrid();
     }
 
     public void onComplete(int countMove)

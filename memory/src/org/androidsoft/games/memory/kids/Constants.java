@@ -21,5 +21,5 @@ package org.androidsoft.games.memory.kids;
  */
 public class Constants
 {
-    final static int VERSION = 5;
+    final static int VERSION = 6;
 }

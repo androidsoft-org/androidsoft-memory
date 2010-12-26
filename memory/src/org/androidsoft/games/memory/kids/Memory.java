@@ -30,7 +30,9 @@ public class Memory
     private static final String PREF_SELECTED_COUNT = "seleted_count";
     private static final String PREF_FOUND_COUNT = "found_count";
     private static final String PREF_LAST_POSITION = "last_position";
-    private static final int SET_SIZE = 10;
+    private static final int MAX_TILES_PER_ROW = 6;
+    private static final int MIN_TILES_PER_ROW = 4;
+    private static final int SET_SIZE = (MAX_TILES_PER_ROW * MIN_TILES_PER_ROW ) / 2;
     private int mSelectedCount;
     private int mMoveCount;
     private int mFoundCount;
@@ -43,16 +45,8 @@ public class Memory
 
     public Memory(int[] tiles , OnMemoryListener listener )
     {
-        mFoundCount = 0;
-        mMoveCount = 0;
-        mList.clear();
         mTiles = tiles;
         mListener = listener;
-        for (Integer tile : getTileSet())
-        {
-            addRandomly(tile);
-        }
-
     }
 
     void onResume(SharedPreferences prefs)
@@ -98,10 +92,31 @@ public class Memory
     {
         return mList.size();
     }
+    
+    public int getMaxTilesPerRow()
+    {
+        return MAX_TILES_PER_ROW;
+    }
+
+    public int getMinTilesPerRow()
+    {
+        return MIN_TILES_PER_ROW;
+    }
 
     int getResId(int position)
     {
         return mList.get(position).getResId();
+    }
+
+    void reset()
+    {
+        mFoundCount = 0;
+        mMoveCount = 0;
+        mList.clear();
+        for (Integer tile : getTileSet())
+        {
+            addRandomly(tile);
+        }
     }
 
     public interface OnMemoryListener

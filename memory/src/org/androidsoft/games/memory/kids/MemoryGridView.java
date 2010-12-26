@@ -27,12 +27,16 @@ import android.widget.GridView;
  */
 public class MemoryGridView extends GridView
 {
+    private static final int MARGIN = 15;
+
     private Memory mMemory;
+    private Context mContext;
 
     public MemoryGridView(Context context)
     {
         super(context);
 
+        mContext = context;
 
         setOnItemClickListener(new OnItemClickListener()
         {
@@ -48,6 +52,7 @@ public class MemoryGridView extends GridView
     public MemoryGridView (Context context, AttributeSet attrs)
     {
         super( context , attrs );
+        mContext = context;
         setOnItemClickListener(new OnItemClickListener()
         {
 
@@ -61,6 +66,7 @@ public class MemoryGridView extends GridView
     public MemoryGridView (Context context, AttributeSet attrs, int defStyle)
     {
         super( context , attrs , defStyle );
+        mContext = context;
         setOnItemClickListener(new OnItemClickListener()
         {
 
@@ -76,6 +82,18 @@ public class MemoryGridView extends GridView
     {
         super.onFinishInflate();
         Log.d( "Memory", "Finish Inflate width:" + getWidth());
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh)
+    {
+        super.onSizeChanged(w, h, oldw, oldh);
+        update( );
+    }
+
+    void update()
+    {
+        setAdapter(new ImageAdapter( mContext, getWidth(), getHeight(), MARGIN , mMemory));
     }
 
 

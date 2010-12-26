@@ -29,14 +29,12 @@
                 android:text="@string/button_play"/>
     </LinearLayout>
 
-<!--              android:columnWidth="70dp"  -->
-
     <view  class="org.androidsoft.games.memory.kids.MemoryGridView"
               android:layoutAnimation="@anim/layout_random_fade"
               android:id="@+id/gridview"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:numColumns="5"
+              android:numColumns="6"
               android:verticalSpacing="8dp"
               android:horizontalSpacing="8dp"
               android:stretchMode="columnWidth"
