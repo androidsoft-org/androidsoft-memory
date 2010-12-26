@@ -106,7 +106,7 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
 
         SharedPreferences prefs = getPreferences(0);
         mMemory.onResume(prefs);
-        mNotFoundResId = prefs.getInt(PREF_NOT_FOUND_RESID, not_found_tile_set[0]);
+        mNotFoundResId = not_found_tile_set[0];
         Tile.setNotFoundResId(mNotFoundResId);
 
         Log.d("MemoryKids", "Draw onResume - mGrid.width:" + mGridView.getWidth() + " window:" + getWindow().getDecorView().getWidth());
