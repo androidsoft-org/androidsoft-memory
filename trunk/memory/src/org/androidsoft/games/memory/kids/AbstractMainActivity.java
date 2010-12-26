@@ -41,6 +41,7 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
     private static final String PREF_STARTED = "started";
     private static final int MENU_NEW_GAME = 1;
     private static final int MENU_QUIT = 2;
+    private static final int MENU_ABOUT = 3;
     private static final int SPLASH_SCREEN_ROTATION_COUNT = 2;
     private static final int SPLASH_SCREEN_ROTATION_DURATION = 2000;
     private static final int GAME_SCREEN_ROTATION_COUNT = 2;
@@ -56,6 +57,7 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
     protected abstract View getGameView();
 
     protected abstract void newGame();
+    protected abstract void about();
 
     /**
      * {@inheritDoc }
@@ -123,8 +125,9 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        menu.add(0, MENU_NEW_GAME, 0, getString(R.string.new_game));
-        menu.add(0, MENU_QUIT, 0, getString(R.string.quit));
+        menu.add(0, MENU_NEW_GAME, 0, getString(R.string.new_game)).setIcon( android.R.drawable.ic_media_play);
+        menu.add(0, MENU_QUIT, 0, getString(R.string.quit)).setIcon( android.R.drawable.ic_menu_close_clear_cancel);
+        menu.add(0, MENU_ABOUT, 0, getString(R.string.credits_menu)).setIcon( android.R.drawable.ic_menu_info_details);
         return true;
     }
 
@@ -141,6 +144,9 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
                 return true;
             case MENU_QUIT:
                 quit();
+                return true;
+            case MENU_ABOUT:
+                about();
                 return true;
         }
         return false;

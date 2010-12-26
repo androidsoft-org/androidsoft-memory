@@ -32,17 +32,17 @@ public class ImageAdapter extends BaseAdapter
     private int mTileSize;
     private Memory mMemory;
 
-    public ImageAdapter(Context c, int width, int height, int countMax, int countMin, int margin , Memory memory )
+    public ImageAdapter(Context c, int width, int height, int margin , Memory memory )
     {
         mContext = c;
         mMemory = memory;
 
         if (width > height)
         {
-            mTileSize = getTileSize(width, height, countMax, countMin, margin);
+            mTileSize = getTileSize(width, height, memory.getMaxTilesPerRow(), memory.getMinTilesPerRow(), margin);
         } else
         {
-            mTileSize = getTileSize(height, width, countMax, countMin, margin);
+            mTileSize = getTileSize(height, width, memory.getMaxTilesPerRow(), memory.getMinTilesPerRow(), margin);
 
         }
 
@@ -89,4 +89,5 @@ public class ImageAdapter extends BaseAdapter
         imageView.setImageResource( mMemory.getResId( position ));
         return imageView;
     }
+
 }
