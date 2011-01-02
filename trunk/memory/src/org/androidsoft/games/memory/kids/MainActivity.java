@@ -19,6 +19,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import java.text.MessageFormat;
 
 /**
  * MainActivity
@@ -172,12 +173,13 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
     {
         int nHighScore = getBestMoveCount();
         String title = getString(R.string.success_title);
-        String message = String.format(getString(R.string.success), countMove, nHighScore);
+        Object[] args = { countMove, nHighScore };
+        String message = MessageFormat.format(getString(R.string.success), args );
         int icon = R.drawable.win;
         if (countMove < nHighScore)
         {
             title = getString(R.string.hiscore_title);
-            message = String.format(getString(R.string.hiscore), countMove, nHighScore);
+            message = MessageFormat.format(getString(R.string.hiscore), args );
             icon = R.drawable.hiscore;
 
             setBestMoveCount(countMove);

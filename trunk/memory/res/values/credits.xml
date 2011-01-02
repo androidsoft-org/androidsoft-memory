@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="credits">
+        <item>*by androidsoft.org</item>
+        <item>*</item>
+        <item>*</item>
+        <item>*</item>
+        <item>*</item>
+        <item>License</item>
+        <item>*</item>
+        <item>*This program is free software:</item>
+        <item>*you can redistribute it and/or </item>
+        <item>*modify it under the terms of the </item>
+        <item>*GNU General Public License </item>
+        <item>*as published by the Free Software</item>
+        <item>*Foundation, either version 3 </item>
+        <item>*of the License, or (at your option)</item>
+        <item>*any later version.</item>
+        <item>*</item>
+        <item>*</item>
+        <item>*</item>
+        <item>*</item>
+        <item>*Icons come from the Crystal Project</item>
+        <item>*directed by Everaldo Coelho.</item>
+        <item>*</item>
+        <item>*Crystal Project icons</item>
+        <item>*are released under</item>
+        <item>*GNU Lesser General Public License.</item>
+        <item>*</item>
+        <item>*</item>
+        <item>*</item>
+        <item>*</item>
+        <item>Credits</item>
+        <item>*</item>
+        <item>*/* Graphics */</item>
+        <item>*</item>
+        <item>*Everaldo Coelho</item>
+        <item>*</item>
+        <item>*</item>
+        <item>*</item>
+        <item>*/* Lead developer */</item>
+        <item>*</item>
+        <item>*Pierre Levy</item>
+        <item>*</item>
+        <item>*</item>
+        <item>*</item>
+        <item>*</item>
+        <item>*http://www.androidsoft.org</item>
+        <item>*Copyright (c) 2010 Pierre Levy</item>
+    </array>
+</resources>
+
