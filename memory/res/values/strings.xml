@@ -3,9 +3,9 @@
     <string name="app_name">"Memory"</string>
     <string name="activity_title">"Memory Game For Kids"</string>
     <string name="success_title">"Great!"</string>
-    <string name="success">"Your score is %d moves.\n\nThe high score is %d moves."</string>
+    <string name="success">Your score is {0} moves.\n\nThe high score is {1} moves.</string>
     <string name="hiscore_title">"New High Score!</string>
-    <string name="hiscore">"You've set the new high score to %d moves. \n\nThe old high score was %d moves."</string>
+    <string name="hiscore">You\'\'ve set the new high score to {0} moves. \n\nThe old high score was {1} moves.</string>
     <string name="new_game">"New game"</string>
     <string name="quit">"Quit"</string>
     <string name="button_play">"Play"</string>
