@@ -16,7 +16,6 @@ package org.androidsoft.games.memory.kids;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -77,12 +76,6 @@ public class MemoryGridView extends GridView
         });
     }
 
-    @Override
-    protected void onFinishInflate()
-    {
-        super.onFinishInflate();
-        Log.d( "Memory", "Finish Inflate width:" + getWidth());
-    }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh)
