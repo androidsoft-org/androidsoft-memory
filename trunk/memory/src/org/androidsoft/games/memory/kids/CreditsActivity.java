@@ -22,7 +22,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import org.androidsoft.games.utils.credits.CreditsParams;
 import org.androidsoft.games.utils.credits.CreditsView;
 
@@ -32,8 +31,6 @@ import org.androidsoft.games.utils.credits.CreditsView;
  */
 public class CreditsActivity  extends Activity
 {
-
-    ImageView mImageView;
 
     @Override
     public void onCreate(Bundle icicle)

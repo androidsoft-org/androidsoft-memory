@@ -24,7 +24,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -119,14 +118,12 @@ public class CreditsView extends SurfaceView implements SurfaceHolder.Callback
 
     public void surfaceCreated(SurfaceHolder holder)
     {
-        Log.d("ARTags", "Surface created");
         mThread = new CreditsThread();
         mThread.start();
     }
 
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
     {
-        Log.d("ARTags", "Surface changed");
         mHandler.removeCallbacks(mDrawFrames);
         mWidth = width;
         mHeight = height;
@@ -150,7 +147,6 @@ public class CreditsView extends SurfaceView implements SurfaceHolder.Callback
 
     public void surfaceDestroyed(SurfaceHolder holder)
     {
-        Log.d("ARTags", "Surface destroyed");
         mHandler.removeCallbacks(mDrawFrames);
         if (mThread != null)
         {
@@ -195,7 +191,6 @@ public class CreditsView extends SurfaceView implements SurfaceHolder.Callback
         @Override
         public void run()
         {
-            Log.d("ARTags", "Credits Thread started");
             while (alive)
             {
                 current = System.currentTimeMillis();
@@ -215,7 +210,6 @@ public class CreditsView extends SurfaceView implements SurfaceHolder.Callback
                     }
                 }
             }
-            Log.d("ARTags", "Credits Thread stopped");
         }
     }
 
