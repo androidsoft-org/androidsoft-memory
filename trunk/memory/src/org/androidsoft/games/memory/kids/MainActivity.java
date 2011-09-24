@@ -1,4 +1,4 @@
-/* Copyright (c) 2010 Pierre LEVY androidsoft.org
+/* Copyright (c) 2010-2011 Pierre LEVY androidsoft.org
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -28,7 +28,6 @@ import java.text.MessageFormat;
 public class MainActivity extends AbstractMainActivity implements Memory.OnMemoryListener
 {
 
-    private static final String PREF_NOT_FOUND_RESID = "not_found_resid";
     private static final String PREF_BEST_MOVE_COUNT = "best_move_count";
     private static final int[] tiles =
     {
@@ -112,6 +111,7 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
 
         Log.d("MemoryKids", "Draw onResume - mGrid.width:" + mGridView.getWidth() + " window:" + getWindow().getDecorView().getWidth());
         drawGrid();
+        
     }
 
     /**

@@ -21,12 +21,19 @@
                   android:layout_marginBottom="10px"
                   android:text="@+string/version" />
 
+        <LinearLayout android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|center_vertical">
+
         <Button android:id="@+id/button_play"
-                android:layout_width="fill_parent"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:verticalSpacing="20dp"
                 android:horizontalSpacing="20dp"
+                android:gravity="center_horizontal|center_vertical"
                 android:text="@string/button_play"/>
+        </LinearLayout>
     </LinearLayout>
 
     <view  class="org.androidsoft.games.memory.kids.MemoryGridView"
@@ -34,6 +41,7 @@
               android:id="@+id/gridview"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
+              android:width="100dp"
               android:numColumns="6"
               android:verticalSpacing="8dp"
               android:horizontalSpacing="8dp"
