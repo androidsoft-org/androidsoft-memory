@@ -70,7 +70,6 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
         super.onCreate(icicle);
         setVolumeControlStream(AudioManager.STREAM_MUSIC);        
         SoundManager.init(AbstractMainActivity.this);
-        SoundManager.instance().addSound(SOUND_NEW_GAME, R.raw.new_game);
 
         setContentView(R.layout.main);
         mContainer = (ViewGroup) findViewById(R.id.container);
@@ -109,6 +108,7 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
         {
             SoundManager.init(this);
         }
+        SoundManager.instance().addSound(SOUND_NEW_GAME, R.raw.new_game);
     }
 
     /**
