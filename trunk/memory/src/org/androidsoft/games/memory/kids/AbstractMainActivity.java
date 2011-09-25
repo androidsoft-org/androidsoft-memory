@@ -19,6 +19,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -67,6 +68,7 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
     public void onCreate(Bundle icicle)
     {
         super.onCreate(icicle);
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);        
         SoundManager.init(AbstractMainActivity.this);
         SoundManager.instance().addSound(SOUND_NEW_GAME, R.raw.new_game);
 
