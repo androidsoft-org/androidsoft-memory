@@ -49,7 +49,7 @@ public class Memory
     private static int[] mSounds = {
       R.raw.blop, R.raw.chime, R.raw.chtoing, R.raw.tic, R.raw.toc, 
       R.raw.toing, R.raw.toing2, R.raw.toing3, R.raw.toing4, R.raw.toing5,
-      R.raw.toing6, R.raw.toong, R.raw.tzirlup, R.raw.whiipz, R.raw.yeuk
+      R.raw.toing6, R.raw.toong, R.raw.tzirlup, R.raw.whiipz
     };
 
     public Memory(int[] tiles , OnMemoryListener listener )
