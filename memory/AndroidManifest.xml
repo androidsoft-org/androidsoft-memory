@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          android:versionCode="12"
-          android:versionName="1.7.2"
+          android:versionCode="13"
+          android:versionName="1.8.0"
           android:installLocation="auto"
           package="org.androidsoft.games.memory.kids">
     <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="11" />
@@ -10,18 +10,17 @@
                 android:label="@string/app_name"
                 android:logo="@drawable/logo"
                 android:hardwareAccelerated="true">
-        <activity android:name=".MainActivity" android:label="@string/activity_title">
+        <activity android:name=".ui.MainActivity" android:label="@string/activity_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".CreditsActivity"
+        <activity android:name=".ui.CreditsActivity"
                   android:label="@string/activity_title">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.CREDITS"/>
-            </intent-filter>
+        </activity>
+        <activity android:name=".ui.PreferencesActivity"
+                  android:label="@string/activity_title">
         </activity>
     </application>
 </manifest>

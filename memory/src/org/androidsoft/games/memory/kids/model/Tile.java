@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.androidsoft.games.memory.kids;
+package org.androidsoft.games.memory.kids.model;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,7 +65,7 @@ public class Tile
         }
     }
 
-    static void setNotFoundResId(int nNotFoundResId)
+    public static void setNotFoundResId(int nNotFoundResId)
     {
         mNotFoundResId = nNotFoundResId;
     }
@@ -80,12 +80,12 @@ public class Tile
         mFound = bFound;
     }
 
-    int getResId()
+    public int getResId()
     {
         return (mFound || mSelected) ? mResId : mNotFoundResId;
     }
 
-    void select()
+    public void select()
     {
         mSelected = true;
     }

@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.androidsoft.games.memory.kids;
+package org.androidsoft.games.memory.kids.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -32,7 +32,11 @@ import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
-import org.androidsoft.games.utils.sound.SoundManager;
+import org.androidsoft.games.memory.kids.Constants;
+import org.androidsoft.games.memory.kids.PreferencesService;
+import org.androidsoft.games.memory.kids.R;
+import org.androidsoft.games.memory.kids.Rotate3dAnimation;
+import org.androidsoft.utils.sound.SoundManager;
 
 /**
  * AbstractMainActivity
@@ -61,6 +65,8 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
 
     protected abstract void about();
 
+    protected abstract void preferences();
+    
     /**
      * {@inheritDoc }
      */
@@ -161,13 +167,19 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
             case R.id.menu_credits:
                 about();
                 return true;
+            case R.id.menu_preferences:
+                preferences();
+                return true;
         }
         return false;
     }
 
     private void onNewGame()
     {
-        SoundManager.instance().playSound(SOUND_NEW_GAME);
+        if( PreferencesService.instance().isSoundEnabled() )
+        {
+            SoundManager.instance().playSound(SOUND_NEW_GAME);
+        }
         newGame();
     }
 
@@ -263,7 +275,10 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
 
         public void onAnimationStart(Animation animation)
         {
-            SoundManager.instance().playSound(SOUND_NEW_GAME);
+            if( PreferencesService.instance().isSoundEnabled() )
+            {
+                SoundManager.instance().playSound(SOUND_NEW_GAME);
+            }
         }
 
         public void onAnimationEnd(Animation animation)

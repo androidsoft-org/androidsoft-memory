@@ -13,41 +13,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.androidsoft.games.memory.kids;
+package org.androidsoft.games.memory.kids.ui;
 
 
-import android.app.Activity;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import org.androidsoft.games.memory.kids.R;
 import org.androidsoft.games.utils.credits.CreditsParams;
 import org.androidsoft.games.utils.credits.CreditsView;
+import org.androidsoft.utils.ui.BasicActivity;
 
 /**
- *
+ * Credits Activity
  * @author Pierre Levy
  */
-public class CreditsActivity  extends Activity
+public class CreditsActivity  extends BasicActivity
 {
 
     @Override
     public void onCreate(Bundle icicle)
     {
         super.onCreate(icicle);
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
-        {
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
-
 
         View view = new CreditsView( this , getCreditsParams() );
         setContentView( view );
@@ -79,32 +66,23 @@ public class CreditsActivity  extends Activity
 
     }
     
-        /**
-     * {@inheritDoc }
+    /**
+     * {@inheritDoc } 
      */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
+    public int getMenuResource()
     {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_close, menu);
-
-        return true;
+        return R.menu.menu_close;
     }
 
     /**
-     * {@inheritDoc }
+     * {@inheritDoc } 
      */
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
+    public int getMenuCloseId()
     {
-        switch (item.getItemId())
-        {
-            case R.id.menu_close:
-                this.finish();
-                return true;
-        }
-        return false;
+        return R.id.menu_close;
     }
-
+    
 
 }

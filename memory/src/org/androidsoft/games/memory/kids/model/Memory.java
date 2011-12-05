@@ -12,12 +12,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.androidsoft.games.memory.kids;
+package org.androidsoft.games.memory.kids.model;
 
 import android.content.SharedPreferences;
 import java.util.ArrayList;
 import java.util.List;
-import org.androidsoft.games.utils.sound.SoundManager;
+import org.androidsoft.games.memory.kids.PreferencesService;
+import org.androidsoft.games.memory.kids.R;
+import org.androidsoft.utils.sound.SoundManager;
 
 /**
  *
@@ -25,40 +27,42 @@ import org.androidsoft.games.utils.sound.SoundManager;
  */
 public class Memory
 {
+
     private static final int SOUND_FAILED = 2000;
     private static final int SOUND_SUCCEED = 2001;
-
     private static final String PREF_LIST = "list";
     private static final String PREF_MOVE_COUNT = "move_count";
     private static final String PREF_SELECTED_COUNT = "seleted_count";
     private static final String PREF_FOUND_COUNT = "found_count";
     private static final String PREF_LAST_POSITION = "last_position";
+    private static final String PREF_TILE_VERSO = "tile_verso";
     private static final int MAX_TILES_PER_ROW = 6;
     private static final int MIN_TILES_PER_ROW = 4;
-    private static final int SET_SIZE = (MAX_TILES_PER_ROW * MIN_TILES_PER_ROW ) / 2;
+    private static final int SET_SIZE = (MAX_TILES_PER_ROW * MIN_TILES_PER_ROW) / 2;
     private int mSelectedCount;
     private int mMoveCount;
     private int mFoundCount;
     private int mLastPosition = -1;
     private Tile mT1;
     private Tile mT2;
-    private static TileList mList = new TileList();
-    private static int[] mTiles;
+    private TileList mList = new TileList();
+    private int[] mTiles;
     private OnMemoryListener mListener;
-    
-    private static int[] mSounds = {
-      R.raw.blop, R.raw.chime, R.raw.chtoing, R.raw.tic, R.raw.toc, 
-      R.raw.toing, R.raw.toing2, R.raw.toing3, R.raw.toing4, R.raw.toing5,
-      R.raw.toing6, R.raw.toong, R.raw.tzirlup, R.raw.whiipz
-    };
+    private static int[] mSounds;
+    private int mTileVerso;
 
-    public Memory(int[] tiles , OnMemoryListener listener )
+    public Memory(int[] tiles, int[] sounds, int tile_verso, OnMemoryListener listener)
     {
         mTiles = tiles;
+        mSounds = sounds;
         mListener = listener;
+        mTileVerso = tile_verso;
+        Tile.setNotFoundResId(mTileVerso);
+
+
     }
 
-    void onResume(SharedPreferences prefs)
+    public void onResume(SharedPreferences prefs)
     {
         String serialized = prefs.getString(PREF_LIST, null);
         if (serialized != null)
@@ -71,13 +75,14 @@ public class Memory
             mT2 = (mSelectedCount > 1) ? list.get(1) : null;
             mFoundCount = prefs.getInt(PREF_FOUND_COUNT, 0);
             mLastPosition = prefs.getInt(PREF_LAST_POSITION, -1);
-
+            mTileVerso = prefs.getInt(PREF_TILE_VERSO, R.drawable.not_found_default);
+            Tile.setNotFoundResId(mTileVerso);
         }
 
         initSounds();
     }
 
-    void onPause(SharedPreferences preferences, boolean quit)
+    public void onPause(SharedPreferences preferences, boolean quit)
     {
         SharedPreferences.Editor editor = preferences.edit();
         if (!quit)
@@ -88,22 +93,25 @@ public class Memory
             editor.putInt(PREF_SELECTED_COUNT, mSelectedCount);
             editor.putInt(PREF_FOUND_COUNT, mFoundCount);
             editor.putInt(PREF_LAST_POSITION, mLastPosition);
-        } else
+            editor.putInt(PREF_TILE_VERSO, mTileVerso);
+        }
+        else
         {
             editor.remove(PREF_LIST);
             editor.remove(PREF_MOVE_COUNT);
             editor.remove(PREF_SELECTED_COUNT);
             editor.remove(PREF_FOUND_COUNT);
             editor.remove(PREF_LAST_POSITION);
+            editor.remove(PREF_TILE_VERSO);
         }
         editor.commit();
     }
 
-    int getCount()
+    public int getCount()
     {
         return mList.size();
     }
-    
+
     public int getMaxTilesPerRow()
     {
         return MAX_TILES_PER_ROW;
@@ -114,12 +122,12 @@ public class Memory
         return MIN_TILES_PER_ROW;
     }
 
-    int getResId(int position)
+    public int getResId(int position)
     {
         return mList.get(position).getResId();
     }
 
-    void reset()
+    public void reset()
     {
         mFoundCount = 0;
         mMoveCount = 0;
@@ -132,11 +140,11 @@ public class Memory
 
     private void initSounds()
     {
-        SoundManager.instance().addSound( SOUND_FAILED , R.raw.failed );
-        SoundManager.instance().addSound( SOUND_SUCCEED , R.raw.succeed );
-        for( int i = 0 ; i < mSounds.length ; i++ )
+        SoundManager.instance().addSound(SOUND_FAILED, R.raw.failed);
+        SoundManager.instance().addSound(SOUND_SUCCEED, R.raw.succeed);
+        for (int i = 0; i < mSounds.length; i++)
         {
-            SoundManager.instance().addSound( i , mSounds[i] );
+            SoundManager.instance().addSound(i, mSounds[i]);
         }
     }
 
@@ -148,7 +156,7 @@ public class Memory
         void onUpdateView();
     }
 
-    void onPosition(int position)
+    public void onPosition(int position)
     {
         if (position == mLastPosition)
         {
@@ -159,7 +167,7 @@ public class Memory
         Tile tile = mList.get(position);
         tile.select();
         int sound = tile.mResId % mSounds.length;
-        SoundManager.instance().playSound( sound );
+        playSound(sound);
 
         switch (mSelectedCount)
         {
@@ -174,11 +182,11 @@ public class Memory
                     mT1.setFound(true);
                     mT2.setFound(true);
                     mFoundCount += 2;
-                    SoundManager.instance().playSound( SOUND_SUCCEED );
+                    playSound(SOUND_SUCCEED);
                 }
                 else
                 {
-//                    SoundManager.instance().playSound( SOUND_FAILED );
+//                    playSound( SOUND_FAILED );
                 }
                 break;
 
@@ -246,5 +254,13 @@ public class Memory
             }
         }
         return list;
+    }
+
+    private void playSound(int index)
+    {
+        if (PreferencesService.instance().isSoundEnabled())
+        {
+            SoundManager.instance().playSound(index);
+        }
     }
 }
