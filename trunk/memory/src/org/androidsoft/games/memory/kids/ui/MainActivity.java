@@ -12,14 +12,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.androidsoft.games.memory.kids;
+package org.androidsoft.games.memory.kids.ui;
 
+import org.androidsoft.games.memory.kids.model.Memory;
+import org.androidsoft.games.memory.kids.model.Tile;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import java.text.MessageFormat;
+import org.androidsoft.games.memory.kids.PreferencesService;
+import org.androidsoft.games.memory.kids.R;
 
 /**
  * MainActivity
@@ -28,8 +30,7 @@ import java.text.MessageFormat;
 public class MainActivity extends AbstractMainActivity implements Memory.OnMemoryListener
 {
 
-    private static final String PREF_BEST_MOVE_COUNT = "best_move_count";
-    private static final int[] tiles =
+    private static final int[] tiles_default =
     {
         R.drawable.item_1, R.drawable.item_2,
         R.drawable.item_3, R.drawable.item_4, R.drawable.item_5, R.drawable.item_6,
@@ -41,12 +42,32 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
         R.drawable.item_27, R.drawable.item_28, R.drawable.item_29, R.drawable.item_30,
         R.drawable.item_31, R.drawable.item_32, R.drawable.item_33, R.drawable.item_34
     };
+    
+    private static final int[] tiles_season =
+    {
+        R.drawable.season_1, R.drawable.season_2,
+        R.drawable.season_3, R.drawable.season_4, R.drawable.season_5, R.drawable.season_6,
+        R.drawable.season_7, R.drawable.season_8, R.drawable.season_9, R.drawable.season_10,
+        R.drawable.season_11, R.drawable.season_12, R.drawable.season_13, R.drawable.season_14,
+        R.drawable.season_15, R.drawable.season_16, R.drawable.season_17, R.drawable.season_18,
+        R.drawable.season_19, R.drawable.season_20
+    };
+    
+    private static final int[][] icons_set = { tiles_default , tiles_season };
+    
+    private static final int[] sounds = {
+      R.raw.blop, R.raw.chime, R.raw.chtoing, R.raw.tic, R.raw.toc, 
+      R.raw.toing, R.raw.toing2, R.raw.toing3, R.raw.toing4, R.raw.toing5,
+      R.raw.toing6, R.raw.toong, R.raw.tzirlup, R.raw.whiipz
+    };
+
+
     private static final int[] not_found_tile_set =
     {
-        R.drawable.not_found_1, R.drawable.not_found_2
+        R.drawable.not_found_default, R.drawable.not_found_season
     };
-    private Memory mMemory = new Memory(tiles, this);
-    private int mNotFoundResId;
+    private Memory mMemory;
+//    private int mNotFoundResId;
     private MemoryGridView mGridView;
 
     /**
@@ -57,7 +78,7 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
     {
         super.onCreate(icicle);
 
-
+        PreferencesService.init( this );
         newGame();
 
     }
@@ -77,11 +98,11 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
     @Override
     protected void newGame()
     {
-        initData();
-        if (mGridView == null)
-        {
-            initGrid();
-        }
+        int set = PreferencesService.instance().getIconsSet(); 
+        mMemory = new Memory( icons_set[ set ], sounds , not_found_tile_set[ set ], this);
+        mMemory.reset();
+        mGridView = (MemoryGridView) findViewById(R.id.gridview);
+        mGridView.setMemory(mMemory);
         drawGrid();
     }
 
@@ -94,7 +115,16 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
         Intent intent = new Intent( this , CreditsActivity.class );
         startActivity(intent);
     }
-
+    
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    protected void preferences()
+    {
+        Intent intent = new Intent( this , PreferencesActivity.class );
+        startActivity(intent);
+    }
 
     /**
      * {@inheritDoc }
@@ -104,12 +134,8 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
     {
         super.onResume();
 
-        SharedPreferences prefs = getPreferences(0);
-        mMemory.onResume(prefs);
-        mNotFoundResId = not_found_tile_set[0];
-        Tile.setNotFoundResId(mNotFoundResId);
+        mMemory.onResume( PreferencesService.instance().getPrefs() );
 
-        Log.d("MemoryKids", "Draw onResume - mGrid.width:" + mGridView.getWidth() + " window:" + getWindow().getDecorView().getWidth());
         drawGrid();
         
     }
@@ -122,56 +148,17 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
     {
         super.onPause();
 
-        mMemory.onPause(getPreferences(0), mQuit);
+        mMemory.onPause( PreferencesService.instance().getPrefs() , mQuit);
 
     }
 
-    private int getBestMoveCount()
-    {
-        SharedPreferences prefs = getPreferences(0);
-
-        return prefs.getInt(PREF_BEST_MOVE_COUNT, 100);
-
-    }
-
-    private void setBestMoveCount(int nMoveCount)
-    {
-        SharedPreferences.Editor editor = getPreferences(0).edit();
-        editor.putInt(PREF_BEST_MOVE_COUNT, nMoveCount);
-        editor.commit();
-    }
 
     /**
-     * Initialize game data
+     * {@inheritDoc }
      */
-    private void initData()
-    {
-        mMemory.reset();
-        mNotFoundResId = not_found_tile_set[0];
-        Tile.setNotFoundResId(mNotFoundResId);
-    }
-
-    /**
-     * Initialize the grid
-     */
-    private void initGrid()
-    {
-        mGridView = (MemoryGridView) findViewById(R.id.gridview);
-        mGridView.setMemory(mMemory);
-    }
-
-    /**
-     * Draw or redraw the grid
-     */
-    private void drawGrid()
-    {
-        mGridView.update();
-
-    }
-
     public void onComplete(int countMove)
     {
-        int nHighScore = getBestMoveCount();
+        int nHighScore = PreferencesService.instance().getHiScore();
         String title = getString(R.string.success_title);
         Object[] args = { countMove, nHighScore };
         String message = MessageFormat.format(getString(R.string.success), args );
@@ -182,13 +169,25 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
             message = MessageFormat.format(getString(R.string.hiscore), args );
             icon = R.drawable.hiscore;
 
-            setBestMoveCount(countMove);
+            PreferencesService.instance().saveHiScore(countMove);
         }
         this.showEndDialog(title, message, icon);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     public void onUpdateView()
     {
         drawGrid();
     }
+
+    /**
+     * Draw or redraw the grid
+     */
+    private void drawGrid()
+    {
+        mGridView.update();
+    }
+
 }

@@ -36,7 +36,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <view  class="org.androidsoft.games.memory.kids.MemoryGridView"
+    <view  class="org.androidsoft.games.memory.kids.ui.MemoryGridView"
               android:layoutAnimation="@anim/layout_random_fade"
               android:id="@+id/gridview"
               android:layout_width="fill_parent"

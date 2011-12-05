@@ -12,8 +12,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.androidsoft.games.memory.kids;
+package org.androidsoft.games.memory.kids.ui;
 
+import org.androidsoft.games.memory.kids.model.Memory;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
