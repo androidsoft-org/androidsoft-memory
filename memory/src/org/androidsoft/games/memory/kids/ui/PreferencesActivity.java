@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import org.androidsoft.games.memory.kids.PreferencesService;
 import org.androidsoft.games.memory.kids.R;
 import org.androidsoft.utils.ui.BasicActivity;
@@ -112,10 +113,12 @@ public class PreferencesActivity extends BasicActivity implements OnClickListene
         else if ( view == mRbNormal )
         {
             PreferencesService.instance().saveIconsSet( PreferencesService.ICONS_SET_NORMAL );
+            Toast.makeText(this, R.string.message_effect_new_game, Toast.LENGTH_LONG).show();
         }
         else if ( view == mRbSeason )
         {
             PreferencesService.instance().saveIconsSet( PreferencesService.ICONS_SET_SEASON );
+            Toast.makeText(this, R.string.message_effect_new_game, Toast.LENGTH_LONG).show();
         }
     }
 
