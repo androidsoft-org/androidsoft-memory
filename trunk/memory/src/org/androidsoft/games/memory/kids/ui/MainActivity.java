@@ -15,7 +15,6 @@
 package org.androidsoft.games.memory.kids.ui;
 
 import org.androidsoft.games.memory.kids.model.Memory;
-import org.androidsoft.games.memory.kids.model.Tile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -48,9 +47,9 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
         R.drawable.season_1, R.drawable.season_2,
         R.drawable.season_3, R.drawable.season_4, R.drawable.season_5, R.drawable.season_6,
         R.drawable.season_7, R.drawable.season_8, R.drawable.season_9, R.drawable.season_10,
-        R.drawable.season_11, R.drawable.season_12, R.drawable.season_13, R.drawable.season_14,
+        R.drawable.season_11, R.drawable.season_12, R.drawable.season_13, R.drawable.season_14 /*,
         R.drawable.season_15, R.drawable.season_16, R.drawable.season_17, R.drawable.season_18,
-        R.drawable.season_19, R.drawable.season_20, R.drawable.season_21, R.drawable.season_22
+        R.drawable.season_19, R.drawable.season_20, R.drawable.season_21, R.drawable.season_22 */
     };
     
     private static final int[][] icons_set = { tiles_default , tiles_season };
