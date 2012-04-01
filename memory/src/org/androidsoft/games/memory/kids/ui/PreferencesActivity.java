@@ -17,11 +17,7 @@ package org.androidsoft.games.memory.kids.ui;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.RadioButton;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import org.androidsoft.games.memory.kids.PreferencesService;
 import org.androidsoft.games.memory.kids.R;
 import org.androidsoft.utils.ui.BasicActivity;
@@ -34,7 +30,7 @@ public class PreferencesActivity extends BasicActivity implements OnClickListene
 {
     private TextView mTvHiScore;
     private Button mButtonResetHiScore;
-    private CheckBox mCbSoundEnabled;
+    private CompoundButton mCbSoundEnabled;
     private RadioButton mRbNormal;
     private RadioButton mRbSeason;
             
@@ -71,7 +67,7 @@ public class PreferencesActivity extends BasicActivity implements OnClickListene
             mRbSeason.setChecked(true);
         }    
         
-        mCbSoundEnabled = (CheckBox) findViewById(R.id.checkbox_sound);
+        mCbSoundEnabled = (CompoundButton) findViewById(R.id.checkbox_sound);
         mCbSoundEnabled.setOnClickListener(this);
         mCbSoundEnabled.setChecked( PreferencesService.instance().isSoundEnabled() );
     }
