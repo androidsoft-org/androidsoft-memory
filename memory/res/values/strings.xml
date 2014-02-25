@@ -21,13 +21,13 @@
     <string name="whats_new_dialog_title">What\'s new in Memory Game For Kids</string>
     <string name="whats_new_dialog_message">Thanks for upgrading Memory Game For Kids\n
     <b>New in version 1.9:</b>\n
-    \t• New season icon set (Easter).\n
+    \t• New season icon set (Christmas).\n
     \t• Still no ads nor internet access required.\n
     \n\nEnjoy it and don\'t forget to rate it to support.
     </string>
     <string name="credits_menu">About</string>
     <string name="credits_app_name">Memory Game For Kids</string>
-    <string name="credits_current_version">Version 1.9.0</string>
+    <string name="credits_current_version">Version 1.9.2</string>
     
     <string name="menu_preferences">Preferences</string>
     <string name="title_hiscore">HiScore</string>
