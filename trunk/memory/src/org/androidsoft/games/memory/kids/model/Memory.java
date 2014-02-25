@@ -42,7 +42,6 @@ public class Memory
     private int mSelectedCount;
     private int mMoveCount;
     private int mFoundCount;
-    private int mLastPosition = -1;
     private Tile mT1;
     private Tile mT2;
     private TileList mList = new TileList();
@@ -74,7 +73,6 @@ public class Memory
             mT1 = (mSelectedCount > 0) ? list.get(0) : null;
             mT2 = (mSelectedCount > 1) ? list.get(1) : null;
             mFoundCount = prefs.getInt(PREF_FOUND_COUNT, 0);
-            mLastPosition = prefs.getInt(PREF_LAST_POSITION, -1);
             mTileVerso = prefs.getInt(PREF_TILE_VERSO, R.drawable.not_found_default);
             Tile.setNotFoundResId(mTileVerso);
         }
@@ -92,7 +90,6 @@ public class Memory
             editor.putInt(PREF_MOVE_COUNT, mMoveCount);
             editor.putInt(PREF_SELECTED_COUNT, mSelectedCount);
             editor.putInt(PREF_FOUND_COUNT, mFoundCount);
-            editor.putInt(PREF_LAST_POSITION, mLastPosition);
             editor.putInt(PREF_TILE_VERSO, mTileVerso);
         }
         else
@@ -158,13 +155,14 @@ public class Memory
 
     public void onPosition(int position)
     {
-        if (position == mLastPosition)
+        Tile tile = mList.get(position);
+
+        if (tile.mSelected)
         {
-            // Same item clicked
+            // clicked on an already open item
             return;
         }
-        mLastPosition = position;
-        Tile tile = mList.get(position);
+
         tile.select();
         int sound = tile.mResId % mSounds.length;
         playSound(sound);
