@@ -6,20 +6,20 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textSize="24sp"
-            android:padding="15px"
+            android:textSize="@dimen/font_size"
+            android:padding="@dimen/padding"
             android:text="@string/title_hiscore" />
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:padding="15px"
+            android:padding="@dimen/padding"
             android:gravity="center"
             android:orientation="horizontal">
             <TextView
@@ -34,7 +34,7 @@
         </LinearLayout>
         <Button
             android:id="@+id/button_reset_hiscore"
-            android:layout_width="200px"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/button_reset_hiscore" />
@@ -43,14 +43,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textSize="24sp"
-            android:padding="15px"
+            android:textSize="@dimen/font_size"
+            android:padding="@dimen/padding"
             android:text="@string/title_icons" />
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:padding="20px"
+            android:padding="@dimen/padding"
             android:orientation="vertical">
             <RadioButton
                 android:id="@+id/radio_mode_normal"
@@ -67,8 +67,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textSize="24sp"
-            android:padding="15px"
+            android:textSize="@dimen/font_size"
+            android:padding="@dimen/padding"
             android:text="@string/title_sound" />
         <Switch
             android:id="@+id/checkbox_sound"

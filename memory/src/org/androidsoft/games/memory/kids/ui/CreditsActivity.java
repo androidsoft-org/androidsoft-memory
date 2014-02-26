@@ -1,4 +1,4 @@
-/* Copyright (c) 2010-2011 Pierre LEVY androidsoft.org
+/* Copyright (c) 2010-2014 Pierre LEVY androidsoft.org
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,8 +20,8 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import org.androidsoft.games.memory.kids.R;
-import org.androidsoft.games.utils.credits.CreditsParams;
-import org.androidsoft.games.utils.credits.CreditsView;
+import org.androidsoft.utils.credits.CreditsParams;
+import org.androidsoft.utils.credits.CreditsView;
 import org.androidsoft.utils.ui.BasicActivity;
 
 /**
@@ -51,16 +51,16 @@ public class CreditsActivity  extends BasicActivity
         p.setArrayCreditsRes(R.array.credits);
 
         p.setColorDefault( 0xFF7BB026);
-        p.setTextSizeDefault( 24 );
+        p.setTextSizeDefault( 48 );
         p.setTypefaceDefault(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
-        p.setSpacingBeforeDefault( 10 );
-        p.setSpacingAfterDefault( 15 );
+        p.setSpacingBeforeDefault( 20 );
+        p.setSpacingAfterDefault( 30 );
 
         p.setColorCategory( 0xFFFFFFFF );
-        p.setTextSizeCategory( 14 );
+        p.setTextSizeCategory( 28 );
         p.setTypefaceCategory(Typeface.create(Typeface.SANS_SERIF, Typeface.ITALIC));
-        p.setSpacingBeforeCategory( 10 );
-        p.setSpacingAfterCategory( 10 );
+        p.setSpacingBeforeCategory( 20 );
+        p.setSpacingAfterCategory( 20 );
 
         return p;
 
