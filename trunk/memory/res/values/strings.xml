@@ -9,8 +9,8 @@
     <string name="new_game">"New game"</string>
     <string name="quit">"Quit"</string>
     <string name="button_play">"Play"</string>
-    <string name="version">"Version 1.9"</string>
-    <string name="ok">Ok</string>
+    <string name="version">"Version 2.0"</string>
+    <string name="ok">OK</string>
     <!-- What's new dialog -->
     <string name="first_run_dialog_title">Welcome to Memory Game For Kids</string>
     <string name="first_run_dialog_message">Thanks for downloading Memory Game For Kids\n\n
@@ -20,14 +20,14 @@
     </string>
     <string name="whats_new_dialog_title">What\'s new in Memory Game For Kids</string>
     <string name="whats_new_dialog_message">Thanks for upgrading Memory Game For Kids\n
-    <b>New in version 1.9:</b>\n
+    <b>New in version 2.0:</b>\n
     \t• New season icon set (Christmas).\n
     \t• Still no ads nor internet access required.\n
     \n\nEnjoy it and don\'t forget to rate it to support.
     </string>
     <string name="credits_menu">About</string>
     <string name="credits_app_name">Memory Game For Kids</string>
-    <string name="credits_current_version">Version 1.9.2</string>
+    <string name="credits_current_version">Version 2.0.0</string>
     
     <string name="menu_preferences">Preferences</string>
     <string name="title_hiscore">HiScore</string>
@@ -35,7 +35,7 @@
     <string name="button_reset_hiscore">Reset HiScore</string>
     <string name="title_icons">Icons</string>
     <string name="radio_mode_normal">Normal mode - standard icons set</string>
-    <string name="radio_mode_season">Season mode - seasons icons set (christmas, halloween, ...)</string>
+    <string name="radio_mode_season">Season mode - seasons icons set (christmas, halloween, &#8230;)</string>
     <string name="message_effect_new_game">This option will take effect after selecting a new game</string>
     <string name="title_sound">Sounds</string>
     <string name="checkbox_sound">Enable sound</string>
