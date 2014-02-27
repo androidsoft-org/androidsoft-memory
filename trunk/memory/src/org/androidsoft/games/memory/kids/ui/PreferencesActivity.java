@@ -14,10 +14,13 @@
  */
 package org.androidsoft.games.memory.kids.ui;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
+import android.widget.AdapterView.OnItemSelectedListener;
 import org.androidsoft.games.memory.kids.PreferencesService;
 import org.androidsoft.games.memory.kids.R;
 import org.androidsoft.utils.ui.BasicActivity;
@@ -28,13 +31,14 @@ import org.androidsoft.utils.ui.BasicActivity;
  */
 public class PreferencesActivity extends BasicActivity implements OnClickListener
 {
+
     private TextView mTvHiScore;
     private Button mButtonResetHiScore;
+    private Button mButtonSupport;
     private CompoundButton mCbSoundEnabled;
-    private RadioButton mRbNormal;
-    private RadioButton mRbSeason;
-            
-    
+    private Spinner mSpinner;
+    private int mIconSet;
+
     /**
      * {@inheritDoc }
      */
@@ -43,39 +47,46 @@ public class PreferencesActivity extends BasicActivity implements OnClickListene
     {
         super.onCreate(icicle);
 
-        setContentView( R.layout.preferences);
-        
-        mTvHiScore = (TextView) findViewById( R.id.hiscore );
+        setContentView(R.layout.preferences);
+
+        mTvHiScore = (TextView) findViewById(R.id.hiscore);
         updateHiScore();
 
         mButtonResetHiScore = (Button) findViewById(R.id.button_reset_hiscore);
         mButtonResetHiScore.setOnClickListener(this);
-        
-        mRbNormal = (RadioButton) findViewById(R.id.radio_mode_normal);  
-        mRbNormal.setOnClickListener(this);
-        mRbSeason = (RadioButton) findViewById(R.id.radio_mode_season);
-        mRbSeason.setOnClickListener(this);
-        int iconSet = PreferencesService.instance().getIconsSet();
-        if( iconSet == PreferencesService.ICONS_SET_NORMAL )
+
+        mSpinner = (Spinner) findViewById(R.id.spinner_theme);
+
+        mIconSet = PreferencesService.instance().getIconsSet();
+        mSpinner.setSelection( mIconSet );
+
+        mSpinner.setOnItemSelectedListener(new OnItemSelectedListener()
         {
-            mRbNormal.setChecked(true);
-            mRbSeason.setChecked(false);
-        }
-        else if ( iconSet == PreferencesService.ICONS_SET_SEASON )
-        {
-            mRbNormal.setChecked(false);
-            mRbSeason.setChecked(true);
-        }    
-        
+
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                setIconSet(position);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+                setIconSet( 0 );
+            }
+
+        });
+
+
         mCbSoundEnabled = (CompoundButton) findViewById(R.id.checkbox_sound);
         mCbSoundEnabled.setOnClickListener(this);
-        mCbSoundEnabled.setChecked( PreferencesService.instance().isSoundEnabled() );
+        mCbSoundEnabled.setChecked(PreferencesService.instance().isSoundEnabled());
+
+        mButtonSupport = (Button) findViewById(R.id.button_support);
+        mButtonSupport.setOnClickListener(this);
+
     }
 
-
-    
     /**
-     * {@inheritDoc } 
+     * {@inheritDoc }
      */
     @Override
     public int getMenuResource()
@@ -84,7 +95,7 @@ public class PreferencesActivity extends BasicActivity implements OnClickListene
     }
 
     /**
-     * {@inheritDoc } 
+     * {@inheritDoc }
      */
     @Override
     public int getMenuCloseId()
@@ -93,44 +104,57 @@ public class PreferencesActivity extends BasicActivity implements OnClickListene
     }
 
     /**
-     * {@inheritDoc } 
+     * {@inheritDoc }
      */
     public void onClick(View view)
     {
-        if( view == mButtonResetHiScore )
+        if (view == mButtonResetHiScore)
         {
             PreferencesService.instance().resetHiScore();
             updateHiScore();
-        } 
-        else if ( view == mCbSoundEnabled )
-        {
-            PreferencesService.instance().saveSoundEnabled( mCbSoundEnabled.isChecked());
         }
-        else if ( view == mRbNormal )
+        else if (view == mCbSoundEnabled)
         {
-            PreferencesService.instance().saveIconsSet( PreferencesService.ICONS_SET_NORMAL );
-            Toast.makeText(this, R.string.message_effect_new_game, Toast.LENGTH_LONG).show();
+            PreferencesService.instance().saveSoundEnabled(mCbSoundEnabled.isChecked());
         }
-        else if ( view == mRbSeason )
+        else if (view == mButtonSupport)
         {
-            PreferencesService.instance().saveIconsSet( PreferencesService.ICONS_SET_SEASON );
-            Toast.makeText(this, R.string.message_effect_new_game, Toast.LENGTH_LONG).show();
+            openGooglePlay();
         }
     }
 
     private void updateHiScore()
     {
         int hiscore = PreferencesService.instance().getHiScore();
-        if( hiscore == PreferencesService.HISCORE_DEFAULT )
+        if (hiscore == PreferencesService.HISCORE_DEFAULT)
         {
             mTvHiScore.setText(" - ");
         }
         else
         {
-            mTvHiScore.setText(" " + hiscore );
+            mTvHiScore.setText(" " + hiscore);
+        }
+    }
+    
+    private void setIconSet(int iconSet)
+    {
+        if( iconSet != mIconSet )
+        {
+            PreferencesService.instance().saveIconsSet( iconSet );
+            Toast.makeText(this, R.string.message_effect_new_game, Toast.LENGTH_LONG).show();
+            mIconSet = iconSet;
         }
     }
 
-    
-  
+    /**
+     * Open the market
+     */
+    private void openGooglePlay()
+    {
+        String uri = "market://details?id=org.androidsoft.games.memory.kids";
+        Intent intentGoToGooglePlay = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        startActivity(intentGoToGooglePlay);
+    }
+
+
 }

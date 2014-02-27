@@ -31,28 +31,51 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
 
     private static final int[] tiles_default =
     {
-        R.drawable.item_1, R.drawable.item_2,
-        R.drawable.item_3, R.drawable.item_4, R.drawable.item_5, R.drawable.item_6,
-        R.drawable.item_7, R.drawable.item_8, R.drawable.item_9, R.drawable.item_10,
-        R.drawable.item_11, R.drawable.item_12, R.drawable.item_13, R.drawable.item_14,
-        R.drawable.item_15, R.drawable.item_16, R.drawable.item_17, R.drawable.item_18,
-        R.drawable.item_19, R.drawable.item_20, R.drawable.item_21, R.drawable.item_22,
-        R.drawable.item_23, R.drawable.item_24, R.drawable.item_25, R.drawable.item_26,
-        R.drawable.item_27, R.drawable.item_28, R.drawable.item_29, R.drawable.item_30,
-        R.drawable.item_31, R.drawable.item_32, R.drawable.item_33, R.drawable.item_34
+        R.drawable.default_1, R.drawable.default_2,
+        R.drawable.default_3, R.drawable.default_4, R.drawable.default_5, R.drawable.default_6,
+        R.drawable.default_7, R.drawable.default_8, R.drawable.default_9, R.drawable.default_10,
+        R.drawable.default_11, R.drawable.default_12, R.drawable.default_13, R.drawable.default_14,
+        R.drawable.default_15, R.drawable.default_16, R.drawable.default_17, R.drawable.default_18,
+        R.drawable.default_19, R.drawable.default_20, R.drawable.default_21, R.drawable.default_22,
+        R.drawable.default_23, R.drawable.default_24, R.drawable.default_25, R.drawable.default_26,
+        R.drawable.default_27, R.drawable.default_28, R.drawable.default_29, R.drawable.default_30,
+        R.drawable.default_31, R.drawable.default_32, R.drawable.default_33, R.drawable.default_34
     };
     
-    private static final int[] tiles_season =
+    
+    private static final int[] tiles_christmas =
     {
-        R.drawable.season_1, R.drawable.season_2,
-        R.drawable.season_3, R.drawable.season_4, R.drawable.season_5, R.drawable.season_6,
-        R.drawable.season_7, R.drawable.season_8, R.drawable.season_9, R.drawable.season_10,
-        R.drawable.season_11, R.drawable.season_12, R.drawable.season_13, R.drawable.season_14 /*,
-        R.drawable.season_15, R.drawable.season_16, R.drawable.season_17, R.drawable.season_18,
-        R.drawable.season_19, R.drawable.season_20, R.drawable.season_21, R.drawable.season_22 */
+        R.drawable.christmas_1, R.drawable.christmas_2,
+        R.drawable.christmas_3, R.drawable.christmas_4, R.drawable.christmas_5, R.drawable.christmas_6,
+        R.drawable.christmas_7, R.drawable.christmas_8, R.drawable.christmas_9, R.drawable.christmas_10,
+        R.drawable.christmas_11, R.drawable.christmas_12, R.drawable.christmas_13, R.drawable.christmas_14 ,
+        R.drawable.christmas_15, R.drawable.christmas_16, R.drawable.christmas_17, R.drawable.christmas_18,
+        R.drawable.christmas_19, R.drawable.christmas_20, R.drawable.christmas_21, R.drawable.christmas_22 
+    };
+ 
+    
+    private static final int[] tiles_easter =
+    {
+        R.drawable.easter_1, R.drawable.easter_2,
+        R.drawable.easter_3, R.drawable.easter_4, R.drawable.easter_5, R.drawable.easter_6,
+        R.drawable.easter_7, R.drawable.easter_8, R.drawable.easter_9, R.drawable.easter_10,
+        R.drawable.easter_11, R.drawable.easter_12, R.drawable.easter_13, R.drawable.easter_14 
+    };
+
+    private static final int[] tiles_tux =
+    {
+        R.drawable.tux_1, R.drawable.tux_2,
+        R.drawable.tux_3, R.drawable.tux_4, R.drawable.tux_5, R.drawable.tux_6,
+        R.drawable.tux_7, R.drawable.tux_8, R.drawable.tux_9, R.drawable.tux_10,
+        R.drawable.tux_11, R.drawable.tux_12, R.drawable.tux_13, R.drawable.tux_14,
+        R.drawable.tux_15, R.drawable.tux_16, R.drawable.tux_17, R.drawable.tux_18,
+        R.drawable.tux_19, R.drawable.tux_20, R.drawable.tux_21, R.drawable.tux_22,
+        R.drawable.tux_23, R.drawable.tux_24, R.drawable.tux_25, R.drawable.tux_26,
+        R.drawable.tux_27, R.drawable.tux_28, R.drawable.tux_29, R.drawable.tux_30,
+        R.drawable.tux_31, R.drawable.tux_32, R.drawable.tux_33
     };
     
-    private static final int[][] icons_set = { tiles_default , tiles_season };
+    private static final int[][] icons_set = { tiles_default , tiles_christmas, tiles_easter, tiles_tux };
     
     private static final int[] sounds = {
       R.raw.blop, R.raw.chime, R.raw.chtoing, R.raw.tic, R.raw.toc, 
@@ -63,10 +86,9 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
 
     private static final int[] not_found_tile_set =
     {
-        R.drawable.not_found_default, R.drawable.not_found_season
+        R.drawable.not_found_default, R.drawable.not_found_christmas, R.drawable.not_found_easter, R.drawable.not_found_tux
     };
     private Memory mMemory;
-//    private int mNotFoundResId;
     private MemoryGridView mGridView;
 
     /**
@@ -77,7 +99,6 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
     {
         super.onCreate(icicle);
 
-        PreferencesService.init( this );
         newGame();
 
     }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="app_name">"Memory"</string>
+    <string name="activity_title">"Memory Game For Kids"</string>
+    <string name="success_title">"Bravo !"</string>
+    <string name="success">Votre score est de {0} mouvements.\n\nLe high score est de {1} mouvements.</string>
+    <string name="hiscore_title">"Nouveau High Score!</string>
+    <string name="hiscore">Vous venez de définir le nouveau High Score à {0} mouvements. \n\nL\'\'ancien High Score était de {1} mouvements.</string>
+    <string name="new_game">"Nouveau"</string>
+    <string name="quit">"Quitter"</string>
+    <string name="button_play">"Jouer"</string>
+    <string name="version">"Version 2.0"</string>
+    <string name="ok">OK</string>
+    <!-- What's new dialog -->
+    <string name="first_run_dialog_title">Bienvenue dans Memory Game For Kids</string>
+    <string name="first_run_dialog_message">Merci d\'avoir téléchargé Memory Game For Kids\n\n
+    Instructions rapides:\n
+    \t• Cliquer sur les cartes pour découvrir les paires.\n
+    \n\n Amusez-vous bien!\n
+    </string>
+    <string name="whats_new_dialog_title">Nouveautés dans Memory Game For Kids</string>
+    <string name="whats_new_dialog_message">Merci d\'avoir téléchargé cette nouvelle version\n
+    <b>Nouveau dans la version 2.0:</b>\n
+    \t• Nouvelle sélection des thèmes (Noël, Pâques,... ) dans les préférences.\n
+    \t• Nouveau Thème : Tux.\n
+    \t• Toujours aucune pub, ni accès internet requis.\n
+    \n\n N\'oubliez pas de noter l\'application.
+    </string>
+    <string name="credits_menu">A propos</string>
+    <string name="credits_app_name">Memory Game For Kids</string>
+    <string name="credits_current_version">Version 2.0.0</string>
+    
+    <string name="menu_preferences">Préférences</string>
+    <string name="title_hiscore">High Score</string>
+    <string name="label_hiscore">High Score actuel : </string>
+    <string name="button_reset_hiscore">Réinitialiser le High Score</string>
+    <string name="title_icons">Thèmes</string>
+    <string name="message_effect_new_game">Cette option prendra effet après avoir lancé un nouveau jeu</string>
+    <string name="title_sound">Son</string>
+    <string name="checkbox_sound">Activer le son</string>
+    
+    <string name="prompt_themes">Sélectionnez votre thème</string>
+    <string-array name="array_themes">
+        <item>Défaut</item> 
+        <item>Saison - Noël</item> 
+        <item>Saison - Pâques</item> 
+        <item>Fun - Tux</item> 
+    </string-array>
+
+    <string name="title_support">Support</string>
+    <string name="text_support">Cette application est un logiciel libre, gratuit, open source, sans publicité et ne nécessitant aucune permission. \n\nPour encourager son développement, merci de noter cette application dans Google Play Store !</string>
+    <string name="button_support">Noter cette application</string>
+
+</resources>

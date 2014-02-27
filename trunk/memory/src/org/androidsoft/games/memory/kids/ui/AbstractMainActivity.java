@@ -74,6 +74,9 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
     public void onCreate(Bundle icicle)
     {
         super.onCreate(icicle);
+
+        PreferencesService.init( this );
+
         setVolumeControlStream(AudioManager.STREAM_MUSIC);        
         SoundManager.init(AbstractMainActivity.this);
 
@@ -86,6 +89,7 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
 
         ImageView image = (ImageView) findViewById(R.id.image_splash);
         image.setImageResource(R.drawable.splash);
+
 
         checkLastVersion();
     }
@@ -340,6 +344,7 @@ public abstract class AbstractMainActivity extends Activity implements OnClickLi
             // show what's new message
             saveVersion(Constants.VERSION);
             showWhatsNewDialog(resTitle, resMessage, R.drawable.icon);
+            PreferencesService.instance().reset();
         }
     }
 
