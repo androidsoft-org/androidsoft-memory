@@ -100,4 +100,9 @@ public class PreferencesService
         return getPrefs().getInt(PREF_ICONS_SET, ICONS_SET_SEASON);
 
     }
+
+    public void reset()
+    {
+        getPrefs().edit().clear().commit();
+    }
 }
