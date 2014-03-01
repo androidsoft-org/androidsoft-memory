@@ -3,93 +3,29 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <LinearLayout 
+        android:orientation="vertical"
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="@dimen/font_size"
-            android:padding="@dimen/padding"
-            android:text="@string/title_hiscore" />
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:padding="@dimen/padding"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_hiscore" />
-            <TextView
-                android:id="@+id/hiscore"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <Button
-            android:id="@+id/button_reset_hiscore"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/button_reset_hiscore" />
-        
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="@dimen/font_size"
-            android:padding="@dimen/padding"
-            android:text="@string/title_icons" />
-        
-        <Spinner
-            android:id="@+id/spinner_theme"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:entries="@array/array_themes"
-            android:prompt="@string/prompt_themes" />
-        
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="@dimen/font_size"
-            android:padding="@dimen/padding"
-            android:text="@string/title_sound" />
+
+        <include layout="@layout/pref_hiscore" />
+    
+        <include layout="@layout/pref_theme" />
+    
+        <include layout="@layout/pref_sound" />
         <ToggleButton
             android:id="@+id/checkbox_sound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/checkbox_sound"
             android:layout_gravity="center_horizontal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="@dimen/font_size"
-            android:padding="@dimen/padding"
-            android:text="@string/title_support" />
         
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/padding"
-            android:text="@string/text_support" />
-
-        <Button
-            android:id="@+id/button_support"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/button_support" />
-
+        <include layout="@layout/pref_support" />
+        
     </LinearLayout>
+        
 </ScrollView>
+

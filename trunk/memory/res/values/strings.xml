@@ -34,7 +34,7 @@
     <string name="title_hiscore">HiScore</string>
     <string name="label_hiscore">Current HiScore : </string>
     <string name="button_reset_hiscore">Reset HiScore</string>
-    <string name="title_icons">Icons</string>
+    <string name="title_theme">Theme</string>
     <string name="message_effect_new_game">This option will take effect after selecting a new game</string>
     <string name="title_sound">Sounds</string>
     <string name="checkbox_sound">Enable sound</string>
