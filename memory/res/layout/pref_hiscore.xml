@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    
+        <ImageView style="@style/icon"
+                   android:src="@drawable/ic_hiscore"/>
+
+        <TextView style="@style/title"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@string/title_hiscore" />
+    
+    </LinearLayout>
+        
+    <View style="@style/line" />
+    
+    <LinearLayout
+            
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="@dimen/padding"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_hiscore" />
+        <TextView
+            android:id="@+id/hiscore"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+        
+    <Button style="@style/button" 
+                android:id="@+id/button_reset_hiscore"
+                android:layout_width="@dimen/widget_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/button_reset_hiscore" />
+        
+</LinearLayout>
+
+        

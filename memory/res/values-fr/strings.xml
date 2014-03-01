@@ -23,7 +23,7 @@
     <b>Nouveau dans la version 2.0:</b>\n
     \t• Nouvelle sélection des thèmes (Noël, Pâques,... ) dans les préférences.\n
     \t• Nouveau Thème : Tux.\n
-    \t• Toujours aucune pub, ni accès internet requis.\n
+    \t• Toujours aucune publicité, ni accès internet requis.\n
     \n\n N\'oubliez pas de noter l\'application.
     </string>
     <string name="credits_menu">A propos</string>
@@ -34,7 +34,7 @@
     <string name="title_hiscore">High Score</string>
     <string name="label_hiscore">High Score actuel : </string>
     <string name="button_reset_hiscore">Réinitialiser le High Score</string>
-    <string name="title_icons">Thèmes</string>
+    <string name="title_theme">Thèmes</string>
     <string name="message_effect_new_game">Cette option prendra effet après avoir lancé un nouveau jeu</string>
     <string name="title_sound">Son</string>
     <string name="checkbox_sound">Activer le son</string>

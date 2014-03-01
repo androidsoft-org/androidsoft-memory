@@ -19,5 +19,10 @@
 <!-- default dimensions (phone) -->
 <resources>
     <dimen name="padding">10dp</dimen>
-    <dimen name="font_size">24sp</dimen>
+    <dimen name="padding_small">2dp</dimen>
+    <dimen name="padding_large">15dp</dimen>
+    <dimen name="title_font_size">24sp</dimen>
+    <dimen name="icon_size">30dp</dimen>
+    <dimen name="line_height">2dp</dimen>
+    <dimen name="widget_width">220dp</dimen>
 </resources>
