@@ -28,7 +28,7 @@
     </string>
     <string name="credits_menu">A propos</string>
     <string name="credits_app_name">Memory Game For Kids</string>
-    <string name="credits_current_version">Version 2.0.0</string>
+    <string name="credits_current_version">Version 2.0.1</string>
     
     <string name="menu_preferences">Préférences</string>
     <string name="title_hiscore">High Score</string>
@@ -48,7 +48,7 @@
     </string-array>
 
     <string name="title_support">Support</string>
-    <string name="text_support">Cette application est un logiciel libre, gratuit, open source, sans publicité et ne nécessitant aucune permission. \n\nPour encourager son développement, merci de noter cette application dans Google Play Store !</string>
+    <string name="text_support">Cette application est un logiciel libre, gratuit, open source, sans publicité et ne nécessitant aucune permission. \n\nPour encourager son développement et sa diffusion, merci de noter cette application dans Google Play Store !</string>
     <string name="button_support">Noter cette application</string>
 
 </resources>

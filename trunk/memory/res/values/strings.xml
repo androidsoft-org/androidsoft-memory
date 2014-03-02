@@ -23,12 +23,13 @@
     <b>New in version 2.0:</b>\n
     \t• New theme selection on preferences screen.\n
     \t• New Tux theme.\n
+    \t• French and Deutch translations.\n
     \t• Still no ads nor internet access required.\n
     \n\nEnjoy it and don\'t forget to rate it to support.
     </string>
     <string name="credits_menu">About</string>
     <string name="credits_app_name">Memory Game For Kids</string>
-    <string name="credits_current_version">Version 2.0.0</string>
+    <string name="credits_current_version">Version 2.0.1</string>
     
     <string name="menu_preferences">Preferences</string>
     <string name="title_hiscore">HiScore</string>
