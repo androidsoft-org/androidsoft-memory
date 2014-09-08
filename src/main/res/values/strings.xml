@@ -29,7 +29,7 @@
     </string>
     <string name="credits_menu">About</string>
     <string name="credits_app_name">Memory Game For Kids</string>
-    <string name="credits_current_version">Version 2.0.1</string>
+    <string name="credits_current_version">Version 2.0.2</string>
     
     <string name="menu_preferences">Preferences</string>
     <string name="title_hiscore">HiScore</string>
@@ -51,5 +51,7 @@
     <string name="title_support">Support</string>
     <string name="text_support">This application is free software, open source, free of ads, requires no permission, please support it by rating it on Google Play Store!</string>
     <string name="button_support">Rate the application</string>
+
+    <string name="image_splash">Splash image</string>    
     
 </resources>

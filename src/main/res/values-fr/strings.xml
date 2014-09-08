@@ -21,14 +21,14 @@
     <string name="whats_new_dialog_title">Nouveautés dans Memory Game For Kids</string>
     <string name="whats_new_dialog_message">Merci d\'avoir téléchargé cette nouvelle version\n
     <b>Nouveau dans la version 2.0:</b>\n
-    \t• Nouvelle sélection des thèmes (Noël, Pâques,... ) dans les préférences.\n
+    \t• Nouvelle sélection des thèmes (Noël, Pâques,&#8230; ) dans les préférences.\n
     \t• Nouveau Thème : Tux.\n
     \t• Toujours aucune publicité, ni accès internet requis.\n
     \n\n N\'oubliez pas de noter l\'application.
     </string>
     <string name="credits_menu">A propos</string>
     <string name="credits_app_name">Memory Game For Kids</string>
-    <string name="credits_current_version">Version 2.0.1</string>
+    <string name="credits_current_version">Version 2.0.2</string>
     
     <string name="menu_preferences">Préférences</string>
     <string name="title_hiscore">High Score</string>
@@ -50,5 +50,7 @@
     <string name="title_support">Support</string>
     <string name="text_support">Cette application est un logiciel libre, gratuit, open source, sans publicité et ne nécessitant aucune permission. \n\nPour encourager son développement et sa diffusion, merci de noter cette application dans Google Play Store !</string>
     <string name="button_support">Noter cette application</string>
+
+    <string name="image_splash">Splash image</string>    
 
 </resources>

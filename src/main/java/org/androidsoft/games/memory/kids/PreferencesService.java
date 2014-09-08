@@ -58,7 +58,7 @@ public class PreferencesService
     {
         SharedPreferences.Editor editor = getPrefs().edit();
         editor.putInt(PREF_BEST_MOVE_COUNT, hiscore);
-        editor.commit();
+        editor.apply();
 
     }
 
@@ -72,7 +72,7 @@ public class PreferencesService
     {
         SharedPreferences.Editor editor = getPrefs().edit();
         editor.remove(PREF_BEST_MOVE_COUNT);
-        editor.commit();
+        editor.apply();
     }
 
     public boolean isSoundEnabled()
@@ -84,14 +84,14 @@ public class PreferencesService
     {
         SharedPreferences.Editor editor = getPrefs().edit();
         editor.putBoolean(PREF_SOUND_ENABLED, enabled);
-        editor.commit();
+        editor.apply();
     }
 
     public void saveIconsSet(int set)
     {
         SharedPreferences.Editor editor = getPrefs().edit();
         editor.putInt(PREF_ICONS_SET, set);
-        editor.commit();
+        editor.apply();
 
     }
 

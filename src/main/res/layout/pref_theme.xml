@@ -4,21 +4,12 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
-    <LinearLayout 
-        android:layout_width="fill_parent"
+    <TextView style="@style/title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:text="@string/title_theme"
+        android:drawableLeft="@drawable/ic_theme" />
     
-        <ImageView style="@style/icon"
-                   android:src="@drawable/ic_theme"/>
-
-        <TextView style="@style/title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_theme" />
-    
-    </LinearLayout>
-        
     <View style="@style/line" />
     
     <Spinner

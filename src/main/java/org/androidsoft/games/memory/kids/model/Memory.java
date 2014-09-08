@@ -101,7 +101,7 @@ public class Memory
             editor.remove(PREF_LAST_POSITION);
             editor.remove(PREF_TILE_VERSO);
         }
-        editor.commit();
+        editor.apply();
     }
 
     public int getCount()
