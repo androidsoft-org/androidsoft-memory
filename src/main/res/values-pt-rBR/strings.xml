@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="app_name">"Memória"</string>
+    <string name="activity_title">"Jogo de Memória para Crianças"</string>
+    <string name="success_title">"Excelente!"</string>
+    <string name="success">Sua pontuação é {0} jogadas.\n\nO recorde é {1} jogadas.</string>
+    <string name="hiscore_title">"Novo recorde!</string>
+    <string name="hiscore">Você conseguiu um novo recorde com {0} jogadas. \n\nO recorde anterior era {1} jogadas.</string>
+    <string name="new_game">"Novo jogo"</string>
+    <string name="quit">"Sair"</string>
+    <string name="button_play">"Jogar"</string>
+    <string name="version">"Versão 2.0"</string>
+    <string name="ok">OK</string>
+    <!-- What's new dialog -->
+    <string name="first_run_dialog_title">Bem-vindo ao Jogo de Memória para Crianças</string>
+    <string name="first_run_dialog_message">Obrigado por baixar o aplicativo Jogo de Memória para Crianças\n\n
+    Instruções rápidas :\n
+    \t• Toque nas peças para encontrar os pares.\n
+    \n\n Divirta-se!\n
+    </string>
+    <string name="whats_new_dialog_title">Novidades do Jogo de Memória para Crianças</string>
+    <string name="whats_new_dialog_message">Obrigado por atualizar o Jogo de Memória para Crianças\n
+    <b>Novidades da versão 2.0:</b>\n
+    \t• Nova seleção de tema na tela de preferências.\n
+    \t• Novo tema Tux.\n
+    \t• Tradução para Francês e Alemão.\n
+    \t• Ainda não é necessário anúncios nem acesso à Internet.\n
+    \n\nDivirta-se e não esqueça de avaliar o aplicativo para contribuir com seu desenvolvimento.
+    </string>
+    <string name="credits_menu">Sobre</string>
+    <string name="credits_app_name">Jogo de Memória para Crianças</string>
+    <string name="credits_current_version">Versão 2.0.2</string>
+    
+    <string name="menu_preferences">Preferências</string>
+    <string name="title_hiscore">Recorde</string>
+    <string name="label_hiscore">Recorde atual : </string>
+    <string name="button_reset_hiscore">Apagar recorde</string>
+    <string name="title_theme">Tema</string>
+    <string name="message_effect_new_game">Esta opção só será aplicada depois de selecionar um novo jogo</string>
+    <string name="title_sound">Sons</string>
+    <string name="checkbox_sound">Ativar o som</string>
+    
+    <string name="prompt_themes">Escolha seu tema</string>
+    <string-array name="array_themes">
+        <item>Padrão</item> 
+        <item>Época - Natal</item> 
+        <item>Época - Páscoa</item> 
+        <item>Diversão - Tux</item> 
+    </string-array>
+    
+    <string name="title_support">Apoio</string>
+    <string name="text_support">Este aplicativo é Software Livre, código-fonte aberto, sem anúncios e não requer permissões especiais. Por favor, apoie-o avaliando no Google Play Store!</string>
+    <string name="button_support">Avaliar o aplicativo</string>
+
+    <string name="image_splash">Imagem de apresentação</string>    
+    
+</resources>
