@@ -74,8 +74,18 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
         R.drawable.tux_27, R.drawable.tux_28, R.drawable.tux_29, R.drawable.tux_30,
         R.drawable.tux_31, R.drawable.tux_32, R.drawable.tux_33
     };
+
+    private static final int[] tiles_animals =
+    {
+	R.drawable.animals_antelope, R.drawable.animals_bear,     R.drawable.animals_biene,       R.drawable.animals_butterfly,
+	R.drawable.animals_chicken,  R.drawable.animals_chipmunk, R.drawable.animals_cow,         R.drawable.animals_crab,
+	R.drawable.animals_crow,     R.drawable.animals_dolphin,  R.drawable.animals_dragonfly,   R.drawable.animals_elephant,
+	R.drawable.animals_fish,     R.drawable.animals_frog,     R.drawable.animals_grasshopper, R.drawable.animals_jaguar,
+	R.drawable.animals_kangaroo, R.drawable.animals_pferd,    R.drawable.animals_pigeon,      R.drawable.animals_schwein,
+	R.drawable.animals_seahorse, R.drawable.animals_snail,    R.drawable.animals_starfish,    R.drawable.animals_swallow,
+    };
     
-    private static final int[][] icons_set = { tiles_default , tiles_christmas, tiles_easter, tiles_tux };
+    private static final int[][] icons_set = { tiles_default , tiles_christmas, tiles_easter, tiles_tux, tiles_animals };
     
     private static final int[] sounds = {
       R.raw.blop, R.raw.chime, R.raw.chtoing, R.raw.tic, R.raw.toc, 
@@ -86,7 +96,7 @@ public class MainActivity extends AbstractMainActivity implements Memory.OnMemor
 
     private static final int[] not_found_tile_set =
     {
-        R.drawable.not_found_default, R.drawable.not_found_christmas, R.drawable.not_found_easter, R.drawable.not_found_tux
+        R.drawable.not_found_default, R.drawable.not_found_christmas, R.drawable.not_found_easter, R.drawable.not_found_tux, R.drawable.not_found_default
     };
     private Memory mMemory;
     private MemoryGridView mGridView;

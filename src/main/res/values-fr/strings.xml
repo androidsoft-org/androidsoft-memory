@@ -45,6 +45,7 @@
         <item>Saison - Noël</item> 
         <item>Saison - Pâques</item> 
         <item>Fun - Tux</item> 
+        <item>Animaux</item>
     </string-array>
 
     <string name="title_support">Support</string>
