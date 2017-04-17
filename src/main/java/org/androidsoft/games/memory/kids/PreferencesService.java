@@ -16,6 +16,8 @@ package org.androidsoft.games.memory.kids;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import org.androidsoft.games.memory.kids.IconSet;
+import org.androidsoft.games.memory.kids.IconSetList;
 
 /**
  * Preference Service
@@ -25,9 +27,8 @@ import android.content.SharedPreferences;
 public class PreferencesService
 {
 
-    public static final int ICONS_SET_NORMAL = 0;
-    public static final int ICONS_SET_SEASON = 1;
     public static final int HISCORE_DEFAULT = 200;
+
     private static final String PREFS_NAME = "MemoryPrefsFile";
     private static final String PREF_BEST_MOVE_COUNT = "best_move_count";
     private static final String PREF_SOUND_ENABLED = "sound_enabled";
@@ -87,18 +88,17 @@ public class PreferencesService
         editor.apply();
     }
 
-    public void saveIconsSet(int set)
+    public void saveIconsSet(String set)
     {
         SharedPreferences.Editor editor = getPrefs().edit();
-        editor.putInt(PREF_ICONS_SET, set);
+        editor.putString(PREF_ICONS_SET, set);
         editor.apply();
 
     }
 
-    public int getIconsSet()
+    public IconSet getIconsSet()
     {
-        return getPrefs().getInt(PREF_ICONS_SET, ICONS_SET_SEASON);
-
+        return getPrefs().getInt(PREF_ICONS_SET, IconSetList.getDefault());
     }
 
     public void reset()
