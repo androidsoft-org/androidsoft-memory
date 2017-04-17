@@ -37,7 +37,7 @@ public class PreferencesActivity extends BasicActivity implements OnClickListene
     private Button mButtonSupport;
     private CompoundButton mCbSoundEnabled;
     private Spinner mSpinner;
-    private int mIconSet;
+    private String mIconSet;
 
     /**
      * {@inheritDoc }
@@ -57,7 +57,7 @@ public class PreferencesActivity extends BasicActivity implements OnClickListene
 
         mSpinner = (Spinner) findViewById(R.id.spinner_theme);
 
-        mIconSet = PreferencesService.instance().getIconsSet();
+        mIconSet = PreferencesService.instance().getIconsSet().hashCode();
         mSpinner.setSelection( mIconSet );
 
         mSpinner.setOnItemSelectedListener(new OnItemSelectedListener()
